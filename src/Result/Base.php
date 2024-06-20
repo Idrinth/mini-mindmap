@@ -9,6 +9,10 @@ abstract class Base implements Result
     protected array $headers = [];
     protected array $cookies = [];
     protected mixed $data;
+    private int $statusCode = 200;
+    protected function __construct(private $mime)
+    {
+    }
 
     public function addHeader(string $name, string $value): void
     {
@@ -34,11 +38,17 @@ abstract class Base implements Result
     {
         $this->data = $content;
     }
+    public function setStatusCode(int $code): void
+    {
+        $this->statusCode = $code;
+    }
+
     protected function sendHeaders(): void
     {
         foreach ($this->headers as $header => $value) {
-            header("$header: $value", true, 200);
+            header("$header: $value", true, $this->statusCode);
         }
+        header("Content-Type: {$this->mime}", true, $this->statusCode);
         foreach ($this->cookies as $name => $data) {
             setcookie($name, $data[0], $data[1], '/', $_SERVER['HTTP_HOST'], true, true);
         }

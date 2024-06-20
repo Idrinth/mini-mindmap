@@ -44,6 +44,8 @@ final class Application
                     $args[] = $this->parameters["$class#{$parameter->getName()}"];
                 } elseif ($parameter->getType()->isBuiltin() && $parameter->getType()->allowsNull()) {
                     $args[] = null;
+                } elseif ($parameter->getType()->isBuiltin() && $parameter->isDefaultValueAvailable()) {
+                    $args[] = $parameter->getDefaultValue();
                 } else {
                     $args[] = $this->create($parameter->getType()->getName());
                 }
@@ -61,13 +63,13 @@ final class Application
                 }
             }
         });
-        $routeInfo = $dispatcher->dispatch($method, $requestURI);
+        $routeInfo = $dispatcher->dispatch(strtolower($method), $requestURI);
         try {
             switch ($routeInfo[0]) {
                 case Dispatcher::FOUND:
                     $handler = $routeInfo[1];
-                    $vars = $routeInfo[2];
-                    return $this->create($handler[0])->$handler[1](...$vars);
+                    $vars = $routeInfo[2] ?? [];
+                    return $this->create($handler[0])->{$handler[1]}(...array_values($vars));
                 case Dispatcher::NOT_FOUND:
                 case Dispatcher::METHOD_NOT_ALLOWED:
                 default:

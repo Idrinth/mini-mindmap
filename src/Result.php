@@ -9,5 +9,6 @@ interface Result
     function setCookie(string $name, string $value, int $expiresIn = 86400): void;
     function clearCookies(): void;
     function setContent(mixed $content): void;
+    function setStatusCode(int $code): void;
     function send(): void;
 }

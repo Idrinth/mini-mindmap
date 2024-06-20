@@ -7,6 +7,11 @@ use De\Idrinth\MiniMindmap\Result\Html;
 class Error
 {
     public function all() {
-        return new Html();
+        $result = new Html();
+        $result->setStatusCode(500);
+        $result->setContent([
+            'template' => 'error.twig'
+        ]);
+        return $result;
     }
 }

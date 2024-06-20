@@ -5,14 +5,18 @@ namespace De\Idrinth\MiniMindmap\Controller;
 use De\Idrinth\MiniMindmap\Result;
 use De\Idrinth\MiniMindmap\Result\Html;
 
-class Homepage
+class Setup
 {
     public function get(): Result
     {
         $result = new Html();
         $result->setContent([
-            'template' => 'home.twig'
+            'template' => 'setup.twig',
         ]);
         return $result;
+    }
+    public function post(): Result
+    {
+
     }
 }

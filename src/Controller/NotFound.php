@@ -7,6 +7,8 @@ use De\Idrinth\MiniMindmap\Result\Html;
 class NotFound
 {
     public function all() {
-        return new Html();
+        $result = new Html();
+        $result->setContent(['template' => 'not-found.twig']);
+        return $result;
     }
 }

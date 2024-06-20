@@ -6,24 +6,51 @@ use De\Idrinth\MiniMindmap\Repository\Node;
 use De\Idrinth\MiniMindmap\Result;
 use De\Idrinth\MiniMindmap\Result\Html;
 use De\Idrinth\MiniMindmap\Result\Json;
+use Ramsey\Uuid\Uuid;
+use Throwable;
 use Webmozart\Assert\Assert;
 
 class Mindmap
 {
-    private \De\Idrinth\MiniMindmap\Repository\Mindmap $mindmap;
-    private Node $node;
+    public  function __construct(private Node $node, private \De\Idrinth\MiniMindmap\Repository\Mindmap $mindmap)
+    {
+    }
     public function get(string $id): Result
     {
         Assert::uuid($id);
         $mindmapId = $this->mindmap->uuidToId($id);
         $result = new Html();
-        $mindmap =  $this->mindmap->get($mindmapId);
+        $mindmap = $this->mindmap->get($mindmapId);
         $result->setContent([
             'template' => 'mindmap.twig',
             'mindmap' => $mindmap,
             'root' => $this->node->get($mindmap->rootElementId),
             'nodes'  => $this->node->getChildren($mindmap->rootElementId),
         ]);
+        return $result;
+    }
+    public function create(): Result
+    {
+        $result = new Html();
+        $result->setContent([
+            'template' => 'mindmap-create.twig',
+        ]);
+        return $result;
+    }
+    public function post(): Result
+    {
+        $result = new Html();
+        $result->setContent([
+            'template' => 'mindmap-create.twig',
+        ]);
+        try {
+            Assert::notEmpty($_POST['name'] ?? '');
+            $uuid = Uuid::uuid4();
+            $result->setStatusCode(301);
+            $result->addHeader('Location', '/mindmap/' . $uuid);
+        } catch (Throwable $t) {
+
+        }
         return $result;
     }
     public function single(string $id, string $parent): Result
