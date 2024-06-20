@@ -5,7 +5,9 @@ use De\Idrinth\MiniMindmap\Controller\Image;
 use De\Idrinth\MiniMindmap\Controller\Latest;
 use De\Idrinth\MiniMindmap\Controller\Mindmap;
 use De\Idrinth\MiniMindmap\Application;
+use De\Idrinth\MiniMindmap\Controller\Scripts;
 use De\Idrinth\MiniMindmap\Controller\Setup;
+use De\Idrinth\MiniMindmap\Controller\Styles;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -14,6 +16,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->parameter(PDO::class, 'username', $_ENV['DATABASE_USERNAME'] ?? null)
     ->parameter(PDO::class, 'password', $_ENV['DATABASE_PASSWORD'] ?? null)
     ->register('get', '/', Homepage::class)
+    ->register('get', '/styles.css', Styles::class)
+    ->register('get', '/scripts.js', Scripts::class)
     ->register('get', '/mindmap', Mindmap::class, 'create')
     ->register('post', '/mindmap', Mindmap::class)
     ->register('get', '/setup', Setup::class)

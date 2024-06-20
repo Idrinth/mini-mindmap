@@ -12,7 +12,12 @@ class Mindmap
     }
     public function get(string $id): \De\Idrinth\MiniMindmap\Entity\Mindmap
     {
-        return new \De\Idrinth\MiniMindmap\Entity\Mindmap();
+        $mindmap = new \De\Idrinth\MiniMindmap\Entity\Mindmap();
+        $mindmap->uuid = $id;
+        $mindmap->title = 'some title';
+        $mindmap->id = 213;
+        $mindmap->rootElementId = 122314;
+        return $mindmap;
     }
     public function create(string $title): \De\Idrinth\MiniMindmap\Entity\Mindmap
     {

@@ -1,2 +1,18 @@
-{% import 'header.twig' %}
-<h1>{{ name }}</h1>
+{% include 'header.twig' %}
+<h1>{{ mindmap.title }}</h1>
+<ul>
+    <li id="node-{{ root.uuid }}" data-uuid="{{ root.uuid }}" class="active">
+        <span title="{{ root.description }}">{{ root.text }}</span>
+        <ul>
+            {% for node in nodes %}
+                <li id="node-{{ node.uuid }}" class="unloaded" data-uuid="{{ node.uuid }}">
+                    <span title="{{ node.description }}">{{ node.text }}</span>
+                    <button id="load-{{ node.uuid }}" class="add" type="button" onclick="window.imm.load('{{ node.uuid }}')">load</button>
+                </li>
+            {% endfor %}
+            <li>
+                <button id="add-{{ root.uuid }}" type="button" onclick="window.imm.add('{{ root.uuid }}')">+</button>
+            </li>
+        </ul>
+    </li>
+</ul>

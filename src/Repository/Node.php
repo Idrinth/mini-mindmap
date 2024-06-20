@@ -12,7 +12,11 @@ class Node
     }
     public function get(int $id): \De\Idrinth\MiniMindmap\Entity\Node
     {
-        return new \De\Idrinth\MiniMindmap\Entity\Node();
+        $node = new \De\Idrinth\MiniMindmap\Entity\Node();
+        $node->id = $id;
+        $node->uuid = Uuid::uuid4();
+        $node->text = "node example";
+        return $node;
     }
 
     /**
@@ -21,9 +25,9 @@ class Node
     public function getChildren(int $id): array
     {
         return [
-            new \De\Idrinth\MiniMindmap\Entity\Node(),
-            new \De\Idrinth\MiniMindmap\Entity\Node(),
-            new \De\Idrinth\MiniMindmap\Entity\Node(),
+            $this->get(12243),
+            $this->get(12273),
+            $this->get(16243),
         ];
     }
     public function create(string $text, string $description): \De\Idrinth\MiniMindmap\Entity\Node
