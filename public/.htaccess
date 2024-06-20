@@ -1,0 +1,4 @@
+<IfModule 'rewrite_engine'>
+    RewriteEngine on
+    RewriteRule .* index.php
+</IfModule>
