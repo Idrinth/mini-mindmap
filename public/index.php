@@ -28,8 +28,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
     ->register('get', '/mindmap/{mindmap}/node/{node}', Mindmap::class, 'single')
     ->register('put', '/mindmap/{mindmap}/parent/{parent}', Mindmap::class)
     ->register('delete', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
-    ->register('post', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
+    ->register('patch', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
     ->register('get', '/modified/{mindmap}/update/{latest}', Latest::class)
     ->register('get', '/image/{mindmap}/{image}.(jpg|png|gif)', Image::class)
+    ->register('get', '/imm.svg', Image::class, 'logo')
     ->handle($_SERVER['REQUEST_URI'] ?? '/', $_SERVER['REQUEST_METHOD'])
     ->send();

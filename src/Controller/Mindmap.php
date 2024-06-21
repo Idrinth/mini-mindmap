@@ -25,8 +25,15 @@ class Mindmap
             'template' => 'mindmap.twig',
             'mindmap' => $mindmap,
             'root' => $this->node->get($mindmap->rootElementId),
-            'nodes'  => $this->node->getChildren($mindmap->rootElementId),
         ]);
+        return $result;
+    }
+    public function put(string $id, string $parent): Result
+    {
+        Assert::uuid($id);
+        Assert::uuid($parent);
+        $result = new Json();
+        $result->setContent($this->node->get($this->node->uuidToId($this->mindmap->uuidToId($id), $parent)));
         return $result;
     }
     public function create(): Result
@@ -54,6 +61,16 @@ class Mindmap
         return $result;
     }
     public function single(string $id, string $parent): Result
+    {
+        Assert::uuid($id);
+        Assert::uuid($parent);
+        $mindmapId = $this->mindmap->uuidToId($id);
+        $parentId = $this->node->uuidToId($mindmapId, $parent);
+        $result = new Json();
+        $result->setContent($this->node->get($parentId));
+        return $result;
+    }
+    public function patch(string $id, string $parent): Result
     {
         Assert::uuid($id);
         Assert::uuid($parent);

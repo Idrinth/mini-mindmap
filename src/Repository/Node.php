@@ -24,11 +24,11 @@ class Node
      */
     public function getChildren(int $id): array
     {
-        return [
-            $this->get(12243),
-            $this->get(12273),
-            $this->get(16243),
-        ];
+        $result = [];
+        while (rand(0, 1) < 0.75) {
+            $result[] = $this->get(rand());
+        }
+        return $result;
     }
     public function create(string $text, string $description): \De\Idrinth\MiniMindmap\Entity\Node
     {
