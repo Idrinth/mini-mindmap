@@ -9,6 +9,13 @@ class Setup
 {
     public function get(): Result
     {
+        if (is_file(dirname(__DIR__) . '/.env')) {
+            $result = new Html();
+            $result->setStatusCode(303);
+            $result->addHeader('Location', '/');
+            $result->setContent(['template' => 'empty.twig']);
+            return $result;
+        }
         $result = new Html();
         $result->setContent([
             'template' => 'setup.twig',
@@ -17,6 +24,22 @@ class Setup
     }
     public function post(): Result
     {
-
+        if (is_file(dirname(__DIR__) . '/.env')) {
+            $result = new Html();
+            $result->setStatusCode(303);
+            $result->addHeader('Location', '/');
+            $result->setContent(['template' => 'empty.twig']);
+            return $result;
+        }
+        $content = "DATABASE_DSN={$_POST['dsn']}\nDATABASE_USERNAME={$_POST['username']}\nDATABASE_PASSWORD={$_POST['password']}\n";
+        file_put_contents(dirname(__DIR__, 2) . '/.env', $content);
+        exec('php "' .dirname(__DIR__, 2) . '/vendor/bin/phinx" migrate');
+        $result = new Html();
+        $result->setStatusCode(303);
+        $result->addHeader('Location', '/');
+        $result->setContent([
+            'template' => 'empty.twig',
+        ]);
+        return $result;
     }
 }

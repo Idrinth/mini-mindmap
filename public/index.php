@@ -8,13 +8,19 @@ use De\Idrinth\MiniMindmap\Application;
 use De\Idrinth\MiniMindmap\Controller\Scripts;
 use De\Idrinth\MiniMindmap\Controller\Setup;
 use De\Idrinth\MiniMindmap\Controller\Styles;
+use Dotenv\Dotenv;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+
+if (is_file(dirname(__DIR__) . '/.env')) {
+    Dotenv::createImmutable(dirname(__DIR__))->load();
+}
 
 (new Application())
     ->parameter(PDO::class, 'dsn', $_ENV['DATABASE_DSN'] ?? null)
     ->parameter(PDO::class, 'username', $_ENV['DATABASE_USERNAME'] ?? null)
     ->parameter(PDO::class, 'password', $_ENV['DATABASE_PASSWORD'] ?? null)
+    ->parameter(PDO::class, 'options', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION])
     ->register('get', '/', Homepage::class)
     ->register('get', '/styles.css', Styles::class)
     ->register('get', '/scripts.js', Scripts::class)

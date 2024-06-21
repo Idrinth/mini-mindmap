@@ -1,5 +1,11 @@
 <?php
 
+use Dotenv\Dotenv;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+Dotenv::createImmutable(__DIR__)->load();
+
 return [
     'paths' => [
         'migrations' => 'database/migrations',
@@ -9,12 +15,8 @@ return [
         'default_migration_table' => 'phinxlog',
         'default_environment' => 'production',
         'production' => [
-            'adapter' => 'mysql',
-            'host' => 'localhost',
+            'connection' => new PDO($_ENV['DATABASE_DSN'], $_ENV['DATABASE_USERNAME'],$_ENV['DATABASE_PASSWORD']),
             'name' => 'imm',
-            'user' => 'root',
-            'pass' => '',
-            'port' => '3306',
             'charset' => 'utf8mb4',
         ],
     ],

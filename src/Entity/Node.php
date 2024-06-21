@@ -8,7 +8,7 @@ class Node
     public string $uuid;
     public ?int $parentId;
     public string $text;
-    public string $description;
+    public ?string $description;
     public ?string $image;
     public int $mindmapId;
 }

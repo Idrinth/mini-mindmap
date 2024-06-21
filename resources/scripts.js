@@ -3,12 +3,12 @@ window.imm = {
         const parent = document.getElementById('node-' + nodeId);
         const text = window
             .prompt('Enter the title:', parent.firstElementChild.innerText ?? '')
-            .replace(/(^ +)|( $)/ug, '');
+            ?.replace(/(^ +)|( $)/ug, '');
         const description = window
             .prompt('Enter the description:', parent.firstElementChild.getAttribute('title') ?? '')
-            .replace(/(^ +)|( $)/ug, '');
+            ?.replace(/(^ +)|( $)/ug, '');
         const changes = {};
-        if (text === '') {
+        if (text === '' || text === null) {
             if (parent.parentElement.parentElement === document.body) {
                 return;
             }
@@ -29,6 +29,9 @@ window.imm = {
         if (Object.keys(changes).length > 0) {
             fetch(location.href  + '/node/' + nodeId, {
                 method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json',
+                },
                 body: JSON.stringify(changes),
             });
         }
@@ -43,6 +46,9 @@ window.imm = {
             .replace(/(^ +)|( $)/ug, '');
         const data = await fetch(location.href  + '/parent/' + parentId, {
             method: 'PUT',
+            headers: {
+                'content-type': 'application/json',
+            },
             body: JSON.stringify({
                 text,
                 description

@@ -5,6 +5,7 @@ namespace De\Idrinth\MiniMindmap;
 
 use De\Idrinth\MiniMindmap\Controller\Error;
 use De\Idrinth\MiniMindmap\Controller\NotFound;
+use De\Idrinth\MiniMindmap\Result\Html;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use ReflectionClass;
@@ -56,6 +57,16 @@ final class Application
     }
     public function handle(string $requestURI, string $method): Result
     {
+        if ($requestURI !== '/setup' && ! preg_match('/\.[a-z]+$/ui', $requestURI) && ! is_file(dirname(__DIR__) . '/.env')) {
+            $result = new Html();
+            $result->setStatusCode(303);
+            $result->addHeader('Location', '/setup');
+            $result->setContent(['template' => 'empty.twig']);
+            return $result;
+        }
+        if (apache_request_headers()['content-type'] ?? '' === 'application/json') {
+            $_POST = json_decode(file_get_contents('php://input'), true);
+        }
         $dispatcher = simpleDispatcher(function(RouteCollector $r) {
             foreach ($this->routes as $method => $route) {
                 foreach ($route as  $path => $class) {

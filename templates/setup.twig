@@ -3,15 +3,15 @@
     <fieldset>
         <legend>Database</legend>
         <div>
-            <label for="dsn">Host</label>
-            <input type="text" id="dsn" name="dsn"/>
+            <label for="dsn">DSN</label>
+            <input required type="text" id="dsn" name="dsn"/>
         </div>
         <div>
             <label for="username">Username</label>
             <input type="text" id="username" name="username"/>
         </div>
         <div>
-            <label for="password">password</label>
+            <label for="password">Password</label>
             <input type="text" id="password" name="password"/>
         </div>
     </fieldset>
@@ -23,11 +23,11 @@
         </div>
         <div>
             <label for="nodes">Node limit for free accounts</label>
-            <input type="number" id="nodes" name="nodes" value="50"/>
+            <input required type="number" id="nodes" name="nodes" value="50"/>
         </div>
         <div>
             <label for="base">BaseURL</label>
-            <input type="url" id="base" name="base"/>
+            <input required type="url" id="base" name="base"/>
         </div>
     </fieldset>
     <fieldset>

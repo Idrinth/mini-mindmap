@@ -33,7 +33,8 @@ class Mindmap
         Assert::uuid($id);
         Assert::uuid($parent);
         $result = new Json();
-        $result->setContent($this->node->get($this->node->uuidToId($this->mindmap->uuidToId($id), $parent)));
+        $mindmap = $this->mindmap->uuidToId($id);
+        $result->setContent($this->node->create($_POST['text'], $_POST['description'], $mindmap, $this->node->uuidToId($mindmap, $parent)));
         return $result;
     }
     public function create(): Result
@@ -50,14 +51,10 @@ class Mindmap
         $result->setContent([
             'template' => 'mindmap-create.twig',
         ]);
-        try {
-            Assert::notEmpty($_POST['name'] ?? '');
-            $uuid = Uuid::uuid4();
-            $result->setStatusCode(301);
-            $result->addHeader('Location', '/mindmap/' . $uuid);
-        } catch (Throwable $t) {
-
-        }
+        Assert::notEmpty($_POST['name'] ?? '');
+        $mindmap = $this->mindmap->create($_POST['name']);
+        $result->setStatusCode(303);
+        $result->addHeader('Location', '/mindmap/' . $mindmap->uuid);
         return $result;
     }
     public function single(string $id, string $parent): Result
@@ -70,14 +67,24 @@ class Mindmap
         $result->setContent($this->node->get($parentId));
         return $result;
     }
-    public function patch(string $id, string $parent): Result
+    public function patch(string $id, string $node): Result
     {
         Assert::uuid($id);
-        Assert::uuid($parent);
+        Assert::uuid($node);
         $mindmapId = $this->mindmap->uuidToId($id);
-        $parentId = $this->node->uuidToId($mindmapId, $parent);
+        $nodeId = $this->node->uuidToId($mindmapId, $node);
         $result = new Json();
-        $result->setContent($this->node->get($parentId));
+        $result->setContent($this->node->patch($nodeId, $_POST));
+        return $result;
+    }
+    public function delete(string $id, string $node): Result
+    {
+        Assert::uuid($id);
+        Assert::uuid($node);
+        $mindmapId = $this->mindmap->uuidToId($id);
+        $nodeId = $this->node->uuidToId($mindmapId, $node);
+        $result = new Result\NoContent();
+        $this->node->delete($nodeId);
         return $result;
     }
     public function children(string $id, string $parent): Result
