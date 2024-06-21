@@ -12,6 +12,8 @@ use Dotenv\Dotenv;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+date_default_timezone_set('UTC');
+
 if (is_file(dirname(__DIR__) . '/.env')) {
     Dotenv::createImmutable(dirname(__DIR__))->load();
 }
@@ -35,7 +37,7 @@ if (is_file(dirname(__DIR__) . '/.env')) {
     ->register('put', '/mindmap/{mindmap}/parent/{parent}', Mindmap::class)
     ->register('delete', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
     ->register('patch', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
-    ->register('get', '/modified/{mindmap}/update/{latest}', Latest::class)
+    ->register('get', '/mindmap/{mindmap}/since/{since}', Latest::class)
     ->register('get', '/image/{mindmap}/{image}.(jpg|png|gif)', Image::class)
     ->register('get', '/imm.svg', Image::class, 'logo')
     ->handle($_SERVER['REQUEST_URI'] ?? '/', $_SERVER['REQUEST_METHOD'])

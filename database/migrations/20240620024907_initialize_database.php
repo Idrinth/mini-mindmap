@@ -54,16 +54,5 @@ final class InitializeDatabase extends AbstractMigration
             ->addForeignKey('parent_id', 'node', 'id')
             ->addForeignKey('mindmap_id', 'mindmap', 'id')
             ->create();
-        $this->table('event')
-            ->addColumn('uuid', 'string')
-            ->addColumn('customer_id', 'integer')
-            ->addColumn('mindmap_id', 'integer')
-            ->addColumn('node_id', 'integer')
-            ->addColumn('diff', 'text')
-            ->addTimestamps()
-            ->addForeignKey('customer_id', 'customer', 'id')
-            ->addForeignKey('mindmap_id', 'mindmap', 'id')
-            ->addForeignKey('node_id', 'node', 'id')
-            ->create();
     }
 }

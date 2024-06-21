@@ -10,6 +10,24 @@ class Node
 {
     public function  __construct(private PDO $database)
     {}
+    public function changed(int $mindmap, string $since): array
+    {
+        $statement = $this->database->prepare('SELECT id FROM node WHERE mindmap_id=:mindmap AND updated_at >= :since');
+        $statement->execute([
+            ':since' => $since,
+            ':mindmap' => $mindmap,
+        ]);
+        $result = [];
+        foreach ($statement->fetchAll(PDO::FETCH_OBJ) as $node) {
+            $result[] = $this->get($node->id);
+        }
+        return array_map(function(\De\Idrinth\MiniMindmap\Entity\Node $node) {
+            if ($node->parentId !== null) {
+                $node->parentUuid = $this->idToUuid($node->parentId);
+            }
+            return $node;
+        }, $result);
+    }
     public function uuidToId(int $mindmap, string $uuid): int
     {
         $node = $this->database->prepare('SELECT id FROM node WHERE uuid=:uuid and mindmap_id=:mindmap');
@@ -19,9 +37,17 @@ class Node
         ]);
         return (int) $node->fetchColumn();
     }
+    public function idToUuid(int $id): string
+    {
+        $node = $this->database->prepare('SELECT uuid FROM node WHERE id=:id');
+        $node->execute([
+            ':id' => $id,
+        ]);
+        return (string) $node->fetchColumn();
+    }
     public function get(int $id): \De\Idrinth\MiniMindmap\Entity\Node
     {
-        $node = $this->database->prepare('SELECT id,uuid,parent_id AS parentId,`text`,description FROM node WHERE id=:id');
+        $node = $this->database->prepare('SELECT mindmap_id as mindmapId,id,uuid,parent_id AS parentId,`text`,description FROM node WHERE id=:id');
         $node->execute([
             ':id' => $id,
         ]);
@@ -43,12 +69,16 @@ class Node
     public function patch(int $id, array $patch): \De\Idrinth\MiniMindmap\Entity\Node
     {
         $node = $this->get($id);
-        $statement = $this->database->prepare('UPDATE node SET `text`=:text, description=:description WHERE id=:id');
+        $statement = $this->database->prepare('UPDATE node SET `text`=:text, description=:description, updated_at=:now WHERE id=:id');
         $statement->execute([
             'id' => $id,
-            'text' => $patch['text'] ??  $node->text,
+            'text' => $patch['text'] ?? $node->text,
+            'now' => date('Y-m-d H:i:s'),
             'description' => $patch['description'] ?? $node->description,
         ]);
+        if ($node->parentId === null) {
+            (new Mindmap($this->database, $this))->update($node->mindmapId, $patch['text'] ?? $node->text);
+        }
         return $this->get($id);
     }
     public function delete(int $id): void
@@ -58,14 +88,15 @@ class Node
     public function create(string $text, string $description, int $mindmapId, ?int $parentId = null): \De\Idrinth\MiniMindmap\Entity\Node
     {
         $node = $parentId === null
-            ? $this->database->prepare('INSERT INTO node (uuid, `text`, `description`, mindmap_id, parent_id) VALUES (:uuid, :text, :description, :mindmapId, null)')
-            : $this->database->prepare('INSERT INTO node (uuid, `text`, `description`, mindmap_id, parent_id) VALUES (:uuid, :text, :description, :mindmapId, :parentId)');
+            ? $this->database->prepare('INSERT INTO node (uuid, `text`, `description`, mindmap_id, parent_id, updated_at) VALUES (:uuid, :text, :description, :mindmapId, null, :now)')
+            : $this->database->prepare('INSERT INTO node (uuid, `text`, `description`, mindmap_id, parent_id, updated_at) VALUES (:uuid, :text, :description, :mindmapId, :parentId, :now)');
         $node->execute(array_filter([
             ':uuid' => Uuid::uuid4()->toString(),
             ':text' => $text,
             ':description' => $description,
             ':mindmapId' => $mindmapId,
             ':parentId' => $parentId,
+            ':now' => date('Y-m-d H:i:s'),
         ]));
         $id = $this->database->lastInsertId();
         return $this->get($id);

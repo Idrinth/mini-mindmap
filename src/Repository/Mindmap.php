@@ -39,4 +39,14 @@ class Mindmap
         $this->database->exec("UPDATE mindmap SET root_element_id={$initialNode->id} WHERE id=$id");
         return $this->get($id);
     }
+
+    public function update(int $id, mixed $title): void
+    {
+        $mindmap = $this->database->prepare('UPDATE mindmap SET updated_at=:now, title=:title WHERE id=:id');
+        $mindmap->execute([
+            ':id' => $id,
+            ':now' => date('Y-m-d H:i:s'),
+            ':title' => $title,
+        ]);
+    }
 }

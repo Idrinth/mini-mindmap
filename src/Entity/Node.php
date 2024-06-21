@@ -11,4 +11,5 @@ class Node
     public ?string $description;
     public ?string $image;
     public int $mindmapId;
+    public ?string $parentUuid = null;
 }

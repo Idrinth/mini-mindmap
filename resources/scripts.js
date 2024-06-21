@@ -1,4 +1,37 @@
 window.imm = {
+    since: new Date(),
+    async update() {
+        const since = Math.floor(window.imm.since.getTime() / 1000);
+        window.imm.since = new Date();
+        const data = await fetch(location.href  + '/since/' + since);
+        if (data.status === 200) {
+            const list = await data.json();
+            if (Array.isArray(list)) {
+                for (const node of list) {
+                    const el = document.getElementById('node-'+node.uuid);
+                    if (el) {
+                        if (el.parentElement.parentElement === document.body) {
+                            document.getElementsByTagName('h1')[0].innerText = node.text;
+                        }
+                        el.firstElementChild.innerText = node.text;
+                        el.firstElementChild.setAttribute('title', node.description ?? '');
+                    } else {
+                        const parent = document.getElementById('node-'+node.parentUuid).lastElementChild;
+                        const li = document.createElement('li');
+                        li.setAttribute('id', 'node-' + node.uuid);
+                        li.setAttribute('data-uuid', node.uuid);
+                        const span = document.createElement('span');
+                        span.innerText = node.text;
+                        span.setAttribute('title', node.description ?? '');
+                        span.setAttribute('onclick', "window.imm.edit('" + node.uuid + "')");
+                        li.appendChild(span);
+                        parent.insertBefore(li, parent.lastElementChild);
+                    }
+                }
+            }
+        }
+        window.setTimeout(window.imm.update, 1000);
+    },
     edit(nodeId) {
         const parent = document.getElementById('node-' + nodeId);
         const text = window
@@ -7,7 +40,6 @@ window.imm = {
         const description = window
             .prompt('Enter the description:', parent.firstElementChild.getAttribute('title') ?? '')
             ?.replace(/(^ +)|( $)/ug, '');
-        const changes = {};
         if (text === '' || text === null) {
             if (parent.parentElement.parentElement === document.body) {
                 return;
@@ -18,7 +50,11 @@ window.imm = {
             });
             return;
         }
+        const changes = {};
         if (text !== parent.firstElementChild.innerText) {
+            if (parent.parentElement.parentElement === document.body) {
+                document.getElementsByTagName('h1')[0].innerText = text;
+            }
             changes.text = text;
             parent.firstElementChild.innerText = text;
         }
