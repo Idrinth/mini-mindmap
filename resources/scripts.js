@@ -1,6 +1,11 @@
 window.imm = {
     since: new Date(),
+    paused: false,
     async update() {
+        if (window.imm.paused) {
+            window.setTimeout(window.imm.update, 1000);
+            return;
+        }
         const since = Math.floor(window.imm.since.getTime() / 1000);
         window.imm.since = new Date();
         const data = await fetch(location.href  + '/since/' + since);
@@ -150,3 +155,5 @@ window.imm = {
         }
     }
 };
+window.addEventListener('blur', () => window.imm.paused = true);
+window.addEventListener('focus', () => window.imm.paused = false);
