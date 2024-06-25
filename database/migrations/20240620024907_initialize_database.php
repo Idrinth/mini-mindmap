@@ -18,8 +18,12 @@ final class InitializeDatabase extends AbstractMigration
             ->addTimestamps()
             ->create();
         $this->table('customer_user')
-            ->addColumn('customer_id', 'integer')
-            ->addColumn('user_id', 'integer')
+            ->addColumn('customer_id', 'integer', [
+                'signed' => false,
+            ])
+            ->addColumn('user_id', 'integer', [
+                'signed' => false,
+            ])
             ->addColumn('nickname', 'string')
             ->addColumn('role', 'string')
             ->addTimestamps()
@@ -28,16 +32,24 @@ final class InitializeDatabase extends AbstractMigration
             ->create();
         $this->table('mindmap')
             ->addColumn('uuid', 'string')
-            ->addColumn('customer_id', 'integer')
-            ->addColumn('root_element_id', 'integer')
+            ->addColumn('customer_id', 'integer', [
+                'signed' => false,
+            ])
+            ->addColumn('root_element_id', 'integer', [
+                'signed' => false,
+            ])
             ->addColumn('title', 'string')
             ->addTimestamps()
             ->addIndex('uuid')
             ->addForeignKey('customer_id', 'customer', 'id')
             ->create();
         $this->table('mindmap_user')
-            ->addColumn('mindmap_id', 'integer')
-            ->addColumn('user_id', 'integer')
+            ->addColumn('mindmap_id', 'integer', [
+                'signed' => false,
+            ])
+            ->addColumn('user_id', 'integer', [
+                'signed' => false,
+            ])
             ->addColumn('role', 'string')
             ->addTimestamps()
             ->addForeignKey('mindmap_id', 'mindmap', 'id')
@@ -45,8 +57,12 @@ final class InitializeDatabase extends AbstractMigration
             ->create();
         $this->table('node')
             ->addColumn('uuid', 'string')
-            ->addColumn('parent_id', 'integer')
-            ->addColumn('mindmap_id', 'integer')
+            ->addColumn('parent_id', 'integer', [
+                'signed' => false,
+            ])
+            ->addColumn('mindmap_id', 'integer', [
+                'signed' => false,
+            ])
             ->addColumn('text', 'string')
             ->addColumn('description', 'string')
             ->addTimestamps()
