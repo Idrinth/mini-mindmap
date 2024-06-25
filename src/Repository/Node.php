@@ -97,7 +97,9 @@ class Node
             ':mindmapId' => $mindmapId,
             ':parentId' => $parentId,
             ':now' => date('Y-m-d H:i:s'),
-        ]));
+        ], function($entry) {
+            return $entry !== null;
+        }));
         $id = $this->database->lastInsertId();
         return $this->get($id);
     }
