@@ -30,6 +30,14 @@ window.imm = {
                         span.setAttribute('title', node.description ?? '');
                         span.setAttribute('onclick', "window.imm.edit('" + node.uuid + "')");
                         li.appendChild(span);
+                        li.appendChild(document.createElement('ul'));
+                        li.lastElementChild.appendChild(document.createElement('li'));
+                        const button = document.createElement('button');
+                        button.innerText = '+';
+                        button.setAttribute('id', 'add-' + node.uuid);
+                        button.setAttribute('type', 'button');
+                        button.setAttribute('onclick', "window.imm.add('" + node.uuid + "')");
+                        li.lastElementChild.lastElementChild.appendChild(button);
                         parent.insertBefore(li, parent.lastElementChild);
                     }
                 }
