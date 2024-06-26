@@ -23,6 +23,7 @@ class Mindmap
         $mindmap = $this->mindmap->get($mindmapId);
         $result->setContent([
             'template' => 'mindmap.twig',
+            'title_prefix' => $mindmap->title . ' | ',
             'mindmap' => $mindmap,
             'root' => $this->node->get($mindmap->rootElementId),
         ]);
@@ -42,6 +43,7 @@ class Mindmap
         $result = new Html();
         $result->setContent([
             'template' => 'mindmap-create.twig',
+            'title_prefix' => 'Create Mindmap | ',
         ]);
         return $result;
     }

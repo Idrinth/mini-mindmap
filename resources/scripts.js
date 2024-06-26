@@ -17,6 +17,7 @@ window.imm = {
                     if (el) {
                         if (el.parentElement.parentElement === document.body) {
                             document.getElementsByTagName('h1')[0].innerText = node.text;
+                            document.getElementsByTagName('title')[0].innerText = node.text + ' | Idrinth Mini-Mindmap';
                         }
                         el.firstElementChild.innerText = node.text;
                         el.firstElementChild.setAttribute('title', node.description ?? '');
@@ -67,6 +68,7 @@ window.imm = {
         if (text !== parent.firstElementChild.innerText) {
             if (parent.parentElement.parentElement === document.body) {
                 document.getElementsByTagName('h1')[0].innerText = text;
+                document.getElementsByTagName('title')[0].innerText = text + ' | Idrinth Mini-Mindmap';
             }
             changes.text = text;
             parent.firstElementChild.innerText = text;
