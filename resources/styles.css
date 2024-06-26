@@ -1,6 +1,10 @@
 html {
     color: #fff;
     background: #000;
+    font-family: sans-serif;
+}
+h1 {
+    font-family: serif;
 }
 li {
     display: grid;
