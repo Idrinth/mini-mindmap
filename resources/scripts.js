@@ -3,7 +3,7 @@ window.imm = {
     paused: false,
     async update() {
         if (window.imm.paused) {
-            window.setTimeout(window.imm.update, 1000);
+            window.setTimeout(window.imm.update, 100);
             return;
         }
         const since = Math.floor(window.imm.since.getTime() / 1000);

@@ -10,11 +10,15 @@ li {
     text-align: left;
     justify-items: left;
     align-items: center;
-    border-bottom: 1px solid #111;
+    border-bottom: 1px solid #030;
 }
 li:last-child {
-    border-bottom-width: 0px;
+    border-bottom-width: 0;
 }
+a,
+a:visited,
+a:hover,
+a:active,
 span,
 button{
     background: darkgreen;
