@@ -30,8 +30,9 @@ button{
     color: #fff;
 }
 #logo {
-     width: 5em;
-     position: fixed;
-     right: 0;
-     bottom: 0;
- }
+    background: transparent;
+    width: 5em;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
