@@ -83,6 +83,9 @@ class Node
     }
     public function delete(int $id): void
     {
+        foreach ($this->getChildren($id) as $child) {
+            $this->delete($child->id);
+        }
         $this->database->exec("DELETE FROM node WHERE id=$id");
     }
     public function create(string $text, string $description, int $mindmapId, ?int $parentId = null): \De\Idrinth\MiniMindmap\Entity\Node
