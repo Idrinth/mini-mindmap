@@ -10,6 +10,10 @@ li {
     text-align: left;
     justify-items: left;
     align-items: center;
+    border-bottom: 1px solid #111;
+}
+li:last-child {
+    border-bottom-width: 0px;
 }
 span,
 button{
