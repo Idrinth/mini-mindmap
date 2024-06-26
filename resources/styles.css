@@ -33,7 +33,8 @@ button{
     min-width: 3em;
     color: #fff;
 }
-#logo {
+#logo,
+#logo img {
     background: transparent;
     width: 5em;
     position: fixed;
