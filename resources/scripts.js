@@ -1,6 +1,7 @@
 window.imm = {
     since: new Date(),
     paused: false,
+    loading: 0,
     createAddButton(uuid) {
         const button = document.createElement('button');
         button.innerText = '+';
@@ -34,7 +35,7 @@ window.imm = {
         return li;
     },
     async update() {
-        if (window.imm.paused) {
+        if (window.imm.paused || window.imm.loading > 0) {
             window.setTimeout(window.imm.update, 100);
             return;
         }
@@ -128,6 +129,7 @@ window.imm = {
         }
     },
     async load(nodeId) {
+        window.imm.loading ++;
         const parent = document.getElementById('node-' + nodeId);
         const data = await fetch(location.href  + '/parent/' + nodeId);
         if (data.status === 200) {
@@ -150,6 +152,7 @@ window.imm = {
                 }
             }
         }
+        window.imm.loading --;
     }
 };
 window.addEventListener('blur', () => window.imm.paused = true);
