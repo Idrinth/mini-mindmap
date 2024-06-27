@@ -37,7 +37,7 @@ span > strong {
     color: #fff;
     border-radius: 50%;
     border: 1px solid white;
-    padding-right: 1em;
+    margin-right: 1em;
 }
 span > strong.hidden {
     display: none;
@@ -49,6 +49,8 @@ span > em {
     max-height: 10em;
     background: darkgreen;
     color: white;
+    border: 1px solid white;
+    padding: 1em;
 }
 span:hover > em {
     display: block;

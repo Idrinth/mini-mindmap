@@ -70,9 +70,15 @@ window.imm = {
         const text = window
             .prompt('Enter the title:', parent.firstElementChild.childNodes[1].innerText ?? '')
             ?.replace(/(^ +)|( $)/ug, '');
+        if (typeof text === 'undefined') {
+            return;
+        }
         const description = window
             .prompt('Enter the description:', parent.firstElementChild.childNodes[1].innerText ?? '')
             ?.replace(/(^ +)|( $)/ug, '');
+        if (typeof description === 'undefined') {
+            return;
+        }
         if (text === '' || text === null) {
             if (parent.parentElement.parentElement === document.body) {
                 return;
