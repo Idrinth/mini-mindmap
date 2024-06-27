@@ -2,6 +2,27 @@ window.imm = {
     since: new Date(),
     paused: false,
     loading: 0,
+    async getEditedValues(defaultText = '', defaultDescription = '') {
+        return new Promise((resolve) => {
+            document.getElementById('text').value = defaultText;
+            document.getElementById('description').value = defaultDescription;
+            document.getElementById('node-modification').getElementsByTagName('button')[0].onclick = () => {
+                document.getElementById('node-modification').setAttribute('style', 'display: none');                resolve({
+                    text: defaultText,
+                    description: defaultDescription,
+                });
+            }
+            document.getElementById('node-modification').getElementsByTagName('button')[1].onclick = () => {
+                document.getElementById('node-modification').setAttribute('style', 'display: none');
+                const text = document.getElementById('text').value.trim();
+                const description = document.getElementById('description').value.trim();
+                resolve({
+                    text,
+                    description,
+                });
+            }
+        });
+    },
     createAddButton(uuid) {
         const button = document.createElement('button');
         button.innerText = '+';
@@ -65,26 +86,15 @@ window.imm = {
         }
         window.setTimeout(window.imm.update, 1000);
     },
-    edit(nodeId) {
+    async edit(nodeId) {
         const parent = document.getElementById('node-' + nodeId);
-        const text = window
-            .prompt('Enter the title:', parent.firstElementChild.childNodes[1].innerText ?? '')
-            ?.replace(/(^ +)|( $)/ug, '');
-        if (typeof text === 'undefined') {
-            return;
-        }
-        const description = window
-            .prompt('Enter the description:', parent.firstElementChild.childNodes[1].innerText ?? '')
-            ?.replace(/(^ +)|( $)/ug, '');
-        if (typeof description === 'undefined') {
-            return;
-        }
-        if (text === '' || text === null) {
+        const {text, description} = await window.imm.getEditedValues(parent.firstElementChild.childNodes[1].innerText, parent.firstElementChild.childNodes[2].innerText)
+        if (text === '') {
             if (parent.parentElement.parentElement === document.body) {
                 return;
             }
             parent.parentElement.removeChild(parent);
-            fetch(location.href  + '/node/' + nodeId, {
+            await fetch(location.href  + '/node/' + nodeId, {
                 method: 'DELETE',
             });
             return;
@@ -115,12 +125,7 @@ window.imm = {
     },
     async add(parentId) {
         const parent = document.getElementById('node-' + parentId);
-        const text = window
-            .prompt('Enter the title:', '')
-            .replace(/(^ +)|( $)/ug, '');
-        const description = window
-            .prompt('Enter the description:', '')
-            .replace(/(^ +)|( $)/ug, '');
+        const {text, description} = await window.imm.getEditedValues();
         const data = await fetch(location.href  + '/parent/' + parentId, {
             method: 'PUT',
             headers: {

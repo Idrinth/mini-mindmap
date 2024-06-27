@@ -1,6 +1,20 @@
 {% include 'header.twig' %}
 <h1>{{ mindmap.title }}</h1>
 <ul></ul>
+<form id="node-modification" style="display: none">
+    <div>
+        <label for="text">Text(empty to delete)</label>
+        <input id="text" type="text">
+    </div>
+    <div>
+        <label for="description">Description(optional)</label>
+        <textarea id="description"></textarea>
+    </div>
+    <div>
+        <button type="button">Close</button>
+        <button type="button">Apply</button>
+    </div>
+</form>
 <script>
     document.getElementsByTagName('ul')[0].appendChild(window.imm.createContentLi({{ root|json_encode|raw }}));
     window.imm.load('{{ root.uuid }}');
