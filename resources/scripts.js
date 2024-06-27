@@ -137,17 +137,7 @@ window.imm = {
             if (Array.isArray(list)) {
                 const ul = document.createElement('ul');
                 for (const node of list) {
-                    const li = document.createElement('li');
-                    li.setAttribute('id', 'node-' + node.uuid);
-                    li.setAttribute('data-uuid', node.uuid);
-                    li.appendChild(window.imm.createContentSpan(node));
-                    ul.appendChild(li);
-                }
-                const li = document.createElement('li');
-                li.appendChild(window.imm.createAddButton(nodeId));
-                ul.appendChild(li);
-                parent.appendChild(ul);
-                for (const node of list) {
+                    ul.appendChild(this.createContentLi(node));
                     window.imm.load(node.uuid);
                 }
             }
