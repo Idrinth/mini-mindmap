@@ -139,7 +139,7 @@ window.imm = {
                 const ul = document.createElement('ul');
                 for (const node of list) {
                     ul.appendChild(this.createContentLi(node));
-                    window.imm.load(node.uuid);
+                    window.setTimeout(() => window.imm.load(node.uuid), 0);
                 }
             }
         }
