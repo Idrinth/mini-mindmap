@@ -137,7 +137,7 @@ window.imm = {
             const list = await data.json();
             if (Array.isArray(list)) {
                 for (const node of list) {
-                    parent.lastElementChild.insertBefore(parent.lastElementChild.lastElementChild, this.createContentLi(node));
+                    parent.lastElementChild.insertBefore(this.createContentLi(node), parent.lastElementChild.lastElementChild);
                     window.setTimeout(() => window.imm.load(node.uuid), 0);
                 }
             }
