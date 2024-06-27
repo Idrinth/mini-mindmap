@@ -136,9 +136,8 @@ window.imm = {
         if (data.status === 200) {
             const list = await data.json();
             if (Array.isArray(list)) {
-                const ul = document.createElement('ul');
                 for (const node of list) {
-                    ul.appendChild(this.createContentLi(node));
+                    parent.lastElementChild.appendChild(this.createContentLi(node));
                     window.setTimeout(() => window.imm.load(node.uuid), 0);
                 }
             }
