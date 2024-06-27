@@ -2,7 +2,7 @@
 <h1>{{ mindmap.title }}</h1>
 <ul></ul>
 <script>
-    document.getElementsByTagName('ul')[0].appendChild(window.imm.createContentLi({% raw %}{{ root|json_encode }}{% endraw %}));
+    document.getElementsByTagName('ul')[0].appendChild(window.imm.createContentLi({{ root|json_encode|raw }}));
     window.imm.load('{{ root.uuid }}');
     window.setTimeout(window.imm.update, 1000);
 </script>
