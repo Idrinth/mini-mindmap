@@ -15,6 +15,7 @@ window.imm = {
         const span = document.createElement('span');
         span.setAttribute('onclick', "window.imm.edit('" + uuid + "')");
         const info = document.createElement('strong');
+        info.setAttribute('class', description ? '' : 'hidden');
         info.innerText = 'i';
         span.appendChild(info);
         const content = document.createElement('span');
