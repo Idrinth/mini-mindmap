@@ -63,6 +63,7 @@ span.describes:hover > em {
     position: fixed;
     right: 0;
     bottom: 0;
+    border-width: 0;
 }
 #node-modification {
     padding-top: 5em;
