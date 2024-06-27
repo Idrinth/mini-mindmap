@@ -1,9 +1,9 @@
 {% include 'header.twig' %}
 <h1>{{ mindmap.title }}</h1>
-<ul>
-    <li id="node-{{ root.uuid }}" data-uuid="{{ root.uuid }}">
-        <span onclick="window.imm.edit('{{ root.uuid }}')" title="{{ root.description }}">{{ root.text }}</span>
-    </li>
-</ul>
-<script>window.imm.load('{{ root.uuid }}');window.setTimeout(window.imm.update, 1000);</script>
+<ul></ul>
+<script>
+    document.getElementsByTagName('ul')[0].appendChild(window.imm.createContentLi({{ root|json_encode }}));
+    window.imm.load('{{ root.uuid }}');
+    window.setTimeout(window.imm.update, 1000);
+</script>
 {% include 'footer.twig' %}

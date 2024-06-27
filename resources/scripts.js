@@ -1,6 +1,38 @@
 window.imm = {
     since: new Date(),
     paused: false,
+    createAddButton(uuid) {
+        const button = document.createElement('button');
+        button.innerText = '+';
+        button.setAttribute('id', 'add-' + uuid);
+        button.setAttribute('type', 'button');
+        button.setAttribute('title', 'add new child node');
+        button.setAttribute('onclick', "window.imm.add('" + uuid + "')");
+        return button;
+    },
+    createContentSpan({text, description, uuid}) {
+        const span = document.createElement('span');
+        span.setAttribute('onclick', "window.imm.edit('" + uuid + "')");
+        const info = document.createElement('strong');
+        info.innerText = 'i';
+        span.appendChild(info);
+        const content = document.createElement('span');
+        content.innerText = text;
+        span.appendChild(content);
+        const title = document.createElement('em');
+        title.innerText = description ?? '';
+        span.appendChild(title);
+        return span;
+    },
+    createContentLi({text, description, uuid}) {
+        const li = document.createElement('li');
+        li.setAttribute('id', 'node-' + uuid);
+        li.appendChild(window.imm.createContentSpan({text, description, uuid}));
+        li.appendChild(document.createElement('ul'));
+        li.lastElementChild.appendChild(document.createElement('li'));
+        li.lastElementChild.lastElementChild.appendChild(window.imm.createAddButton(uuid));
+        return li;
+    },
     async update() {
         if (window.imm.paused) {
             window.setTimeout(window.imm.update, 100);
@@ -19,27 +51,12 @@ window.imm = {
                             document.getElementsByTagName('h1')[0].innerText = node.text;
                             document.getElementsByTagName('title')[0].innerText = node.text + ' | Idrinth Mini-Mindmap';
                         }
-                        el.firstElementChild.innerText = node.text;
-                        el.firstElementChild.setAttribute('title', node.description ?? '');
+                        el.firstElementChild.childNodes[0].setAttribute('class', node.description ? '' : 'hidden');
+                        el.firstElementChild.childNodes[1].innerText = node.text;
+                        el.firstElementChild.childNodes[2].innerText = node.description ?? '';
                     } else {
                         const parent = document.getElementById('node-'+node.parentUuid).lastElementChild;
-                        const li = document.createElement('li');
-                        li.setAttribute('id', 'node-' + node.uuid);
-                        li.setAttribute('data-uuid', node.uuid);
-                        const span = document.createElement('span');
-                        span.innerText = node.text;
-                        span.setAttribute('title', node.description ?? '');
-                        span.setAttribute('onclick', "window.imm.edit('" + node.uuid + "')");
-                        li.appendChild(span);
-                        li.appendChild(document.createElement('ul'));
-                        li.lastElementChild.appendChild(document.createElement('li'));
-                        const button = document.createElement('button');
-                        button.innerText = '+';
-                        button.setAttribute('id', 'add-' + node.uuid);
-                        button.setAttribute('type', 'button');
-                        button.setAttribute('onclick', "window.imm.add('" + node.uuid + "')");
-                        li.lastElementChild.lastElementChild.appendChild(button);
-                        parent.insertBefore(li, parent.lastElementChild);
+                        parent.insertBefore(window.imm.createContentLi(node), parent.lastElementChild);
                     }
                 }
             }
@@ -49,10 +66,10 @@ window.imm = {
     edit(nodeId) {
         const parent = document.getElementById('node-' + nodeId);
         const text = window
-            .prompt('Enter the title:', parent.firstElementChild.innerText ?? '')
+            .prompt('Enter the title:', parent.firstElementChild.childNodes[1].innerText ?? '')
             ?.replace(/(^ +)|( $)/ug, '');
         const description = window
-            .prompt('Enter the description:', parent.firstElementChild.getAttribute('title') ?? '')
+            .prompt('Enter the description:', parent.firstElementChild.childNodes[1].innerText ?? '')
             ?.replace(/(^ +)|( $)/ug, '');
         if (text === '' || text === null) {
             if (parent.parentElement.parentElement === document.body) {
@@ -65,7 +82,7 @@ window.imm = {
             return;
         }
         const changes = {};
-        if (text !== parent.firstElementChild.innerText) {
+        if (text !== parent.firstElementChild.childNodes[1].innerText) {
             if (parent.parentElement.parentElement === document.body) {
                 document.getElementsByTagName('h1')[0].innerText = text;
                 document.getElementsByTagName('title')[0].innerText = text + ' | Idrinth Mini-Mindmap';
@@ -73,9 +90,10 @@ window.imm = {
             changes.text = text;
             parent.firstElementChild.innerText = text;
         }
-        if (description !== parent.firstElementChild.getAttribute('title')) {
+        if (description !== parent.firstElementChild.childNodes[2].innerText) {
             changes.description = description;
-            parent.firstElementChild.setAttribute('title', description);
+            parent.firstElementChild.childNodes[2].innerText = description;
+            parent.firstElementChild.childNodes[0].setAttribute('class', description ? '' : 'hidden');
         }
         if (Object.keys(changes).length > 0) {
             fetch(location.href  + '/node/' + nodeId, {
@@ -106,32 +124,11 @@ window.imm = {
             }),
         });
         if (data.status === 200) {
-            const node = await data.json();
-            const li = document.createElement('li');
-            li.setAttribute('id', 'node-' + node.uuid);
-            li.setAttribute('data-uuid', node.uuid);
-            const span = document.createElement('span');
-            span.innerText = node.text;
-            span.setAttribute('title', node.description ?? '');
-            span.setAttribute('onclick', "window.imm.edit('" + node.uuid + "')");
-            li.appendChild(span);
-            const ul = document.createElement('ul');
-            const ili = document.createElement('li');
-            const button = document.createElement('button');
-            button.innerText = '+';
-            button.setAttribute('id', 'add-' + node.uuid);
-            button.setAttribute('type', 'button');
-            button.setAttribute('onclick', "window.imm.add('" + node.uuid + "')");
-            ili.appendChild(button);
-            ul.appendChild(ili);
-            li.appendChild(ul);
-            parent.lastElementChild.insertBefore(li, parent.lastElementChild.lastElementChild);
+            parent.lastElementChild.insertBefore(window.imm.createContentLi(await data.json()), parent.lastElementChild.lastElementChild);
         }
     },
     async load(nodeId) {
         const parent = document.getElementById('node-' + nodeId);
-        parent.classList.remove('unloaded');
-        parent.classList.add('loading');
         const data = await fetch(location.href  + '/parent/' + nodeId);
         if (data.status === 200) {
             const list = await data.json();
@@ -141,23 +138,13 @@ window.imm = {
                     const li = document.createElement('li');
                     li.setAttribute('id', 'node-' + node.uuid);
                     li.setAttribute('data-uuid', node.uuid);
-                    const span = document.createElement('span');
-                    span.innerText = node.text;
-                    span.setAttribute('title', node.description ?? '');
-                    span.setAttribute('onclick', "window.imm.edit('" + node.uuid + "')");
-                    li.appendChild(span);
+                    li.appendChild(window.imm.createContentSpan(node));
                     ul.appendChild(li);
                 }
                 const li = document.createElement('li');
-                const button = document.createElement('button');
-                button.innerText = '+';
-                button.setAttribute('id', 'add-' + nodeId);
-                button.setAttribute('type', 'button');
-                button.setAttribute('onclick', "window.imm.add('" + nodeId + "')");
-                li.appendChild(button);
+                li.appendChild(window.imm.createAddButton(nodeId));
                 ul.appendChild(li);
                 parent.appendChild(ul);
-                parent.classList.remove('loading');
                 for (const node of list) {
                     window.imm.load(node.uuid);
                 }

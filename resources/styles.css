@@ -23,8 +23,8 @@ a,
 a:visited,
 a:hover,
 a:active,
-span,
-button{
+li > span,
+li > button{
     background: darkgreen;
     padding: 0.2em;
     border-radius: 0.25em;
@@ -32,6 +32,23 @@ button{
     margin: 0.2em;
     min-width: 3em;
     color: #fff;
+}
+span > strong {
+    color: #fff;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+span > strong.hidden {
+    display: none;
+}
+span > em {
+    display: none;
+    position: absolute;
+    max-width: 10em;
+    max-height: 10em;
+}
+span:hover > em {
+    display: block;
 }
 #logo,
 #logo img {
