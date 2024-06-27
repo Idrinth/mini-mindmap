@@ -6,6 +6,7 @@ window.imm = {
         return new Promise((resolve) => {
             document.getElementById('text').value = defaultText;
             document.getElementById('description').value = defaultDescription;
+            document.getElementById('node-modification').setAttribute('style', 'display:block');
             document.getElementById('node-modification').getElementsByTagName('button')[0].onclick = () => {
                 document.getElementById('node-modification').setAttribute('style', 'display: none');                resolve({
                     text: defaultText,
