@@ -38,9 +38,10 @@ span > strong {
     border-radius: 50%;
     border: 1px solid white;
     margin-right: 1em;
-}
-span > strong.hidden {
     display: none;
+}
+span.describes > strong {
+    display: inline-block;
 }
 span > em {
     display: none;
@@ -52,7 +53,7 @@ span > em {
     border: 1px solid white;
     padding: 1em;
 }
-span:hover > em {
+span.describes:hover > em {
     display: block;
 }
 #logo,
@@ -64,6 +65,8 @@ span:hover > em {
     bottom: 0;
 }
 #node-modification {
+    padding-top: 5em;
+    box-sizing: border-box;
     position: fixed;
     left: 0;
     top: 0;

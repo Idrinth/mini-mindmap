@@ -107,12 +107,12 @@ window.imm = {
                 document.getElementsByTagName('title')[0].innerText = text + ' | Idrinth Mini-Mindmap';
             }
             changes.text = text;
-            parent.firstElementChild.innerText = text;
+            parent.firstElementChild.childNodes[1].innerText = text;
         }
         if (description !== parent.firstElementChild.childNodes[2].innerText) {
             changes.description = description;
             parent.firstElementChild.childNodes[2].innerText = description;
-            parent.firstElementChild.childNodes[0].setAttribute('class', description ? '' : 'hidden');
+            parent.firstElementChild.setAttribute('class', description ? 'describes' : '');
         }
         if (Object.keys(changes).length > 0) {
             fetch(location.href  + '/node/' + nodeId, {
