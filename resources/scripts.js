@@ -2,6 +2,9 @@ window.imm = {
     since: new Date(),
     paused: false,
     loading: 0,
+    context(e) {
+        e.preventDefault();
+    },
     async getEditedValues(defaultText = '', defaultDescription = '') {
         return new Promise((resolve) => {
             document.getElementById('text').value = defaultText;
@@ -159,3 +162,4 @@ window.imm = {
 };
 window.addEventListener('blur', () => window.imm.paused = true);
 window.addEventListener('focus', () => window.imm.paused = false);
+window.addEventListener('contextmenu', window.imm.context);

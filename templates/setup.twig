@@ -1,39 +1,41 @@
 {% include 'header.twig' %}
-<form method="post">
-    <fieldset>
-        <legend>Database</legend>
-        <div>
-            <label for="dsn">DSN</label>
-            <input required type="text" id="dsn" name="dsn"/>
-        </div>
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"/>
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="text" id="password" name="password"/>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Application</legend>
-        <div>
-            <label for="signups">Enable signup</label>
-            <input type="checkbox" id="signups" name="signups" value="1"/>
-        </div>
-        <div>
-            <label for="nodes">Node limit for free accounts</label>
-            <input required type="number" id="nodes" name="nodes" value="50"/>
-        </div>
-        <div>
-            <label for="base">BaseURL</label>
-            <input required type="url" id="base" name="base"/>
-        </div>
-    </fieldset>
-    <fieldset>
-        <div>
-            <button type="submit">Setup</button>
-        </div>
-    </fieldset>
-</form>
+<article>
+    <form method="post">
+        <fieldset>
+            <legend>Database</legend>
+            <div>
+                <label for="dsn">DSN</label>
+                <input required type="text" id="dsn" name="dsn"/>
+            </div>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username"/>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password"/>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Application</legend>
+            <div>
+                <label for="signups">Enable signup</label>
+                <input type="checkbox" id="signups" name="signups" value="1"/>
+            </div>
+            <div>
+                <label for="nodes">Node limit for free accounts</label>
+                <input required type="number" id="nodes" name="nodes" value="50"/>
+            </div>
+            <div>
+                <label for="base">BaseURL</label>
+                <input required type="url" id="base" name="base"/>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div>
+                <button type="submit">Setup</button>
+            </div>
+        </fieldset>
+    </form>
+</article>
 {% include 'footer.twig' %}
