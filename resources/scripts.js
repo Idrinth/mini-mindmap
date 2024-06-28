@@ -3,7 +3,9 @@ window.imm = {
     paused: false,
     loading: 0,
     context(e) {
-        e.preventDefault();
+        if (location.pathname.startsWith('/mindmap/')) {
+            e.preventDefault();
+        }
     },
     async getEditedValues(defaultText = '', defaultDescription = '') {
         return new Promise((resolve) => {
