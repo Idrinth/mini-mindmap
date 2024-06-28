@@ -16,6 +16,10 @@ li {
     align-items: center;
     border-bottom: 1px solid #030;
 }
+img {
+    max-width: 100%;
+    border-radius: 0.1em;
+}
 li:last-child {
     border-bottom-width: 0;
 }
