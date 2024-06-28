@@ -10,6 +10,12 @@ class Mindmap
 {
     public function  __construct(private PDO $database,  private Node $node)
     {}
+    public function count()
+    {
+        $mindmap = $this->database->prepare('SELECT Count(id) FROM mindmap');
+        $mindmap->execute([]);
+        return (int) $mindmap->fetchColumn();
+    }
     public function uuidToId(string $uuid): int
     {
         $mindmap = $this->database->prepare('SELECT id FROM mindmap WHERE uuid=:uuid');

@@ -10,6 +10,12 @@ class Node
 {
     public function  __construct(private PDO $database)
     {}
+    public function count()
+    {
+        $mindmap = $this->database->prepare('SELECT Count(id) FROM node');
+        $mindmap->execute([]);
+        return (int) $mindmap->fetchColumn();
+    }
     public function changed(int $mindmap, string $since): array
     {
         $statement = $this->database->prepare('SELECT id FROM node WHERE mindmap_id=:mindmap AND updated_at >= :since');
