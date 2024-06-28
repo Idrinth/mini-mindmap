@@ -88,3 +88,27 @@ textarea {
     min-height: 3em;
     width: 100%;
 }
+article {
+    width: 95%;
+    padding: 2.5%;
+    margin: auto 0;
+    max-width: 1000px;
+}
+@media screen and (width > 500) {
+    article {
+        width: 90%;
+        padding: 5%;
+    }
+}
+@media screen and (width > 700) {
+    article {
+        width: 85%;
+        padding: 7.5%;
+    }
+}
+@media screen and (width > 900) {
+    article {
+        width: 80%;
+        padding: 10%;
+    }
+}
