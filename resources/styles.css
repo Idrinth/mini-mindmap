@@ -24,7 +24,7 @@ a:visited,
 a:hover,
 a:active,
 li > span,
-li > button{
+button {
     background: darkgreen;
     padding: 0.2em;
     border-radius: 0.25em;
@@ -32,6 +32,7 @@ li > button{
     margin: 0.2em;
     min-width: 3em;
     color: #fff;
+    cursor: pointer;
 }
 span > strong {
     color: #fff;
