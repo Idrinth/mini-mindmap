@@ -3,6 +3,7 @@
 namespace De\Idrinth\MiniMindmap\Controller;
 
 use De\Idrinth\MiniMindmap\Result;
+use De\Idrinth\MiniMindmap\Result\Jpeg;
 use De\Idrinth\MiniMindmap\Result\Png;
 use De\Idrinth\MiniMindmap\Result\Svg;
 
@@ -16,6 +17,12 @@ class Image
     {
         $result = new Svg();
         $result->setContent('imm');
+        return $result;
+    }
+    public function banner():  Result
+    {
+        $result = new Jpeg();
+        $result->setContent('idrinth-mini-mindmap');
         return $result;
     }
 }

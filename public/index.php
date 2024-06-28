@@ -40,5 +40,6 @@ if (is_file(dirname(__DIR__) . '/.env')) {
     ->register('get', '/mindmap/{mindmap}/since/{since}', Latest::class)
     ->register('get', '/image/{mindmap}/{image}.(jpg|png|gif)', Image::class)
     ->register('get', '/imm.svg', Image::class, 'logo')
+    ->register('get', '/idrinth-mini-mindmap.jpg', Image::class, 'banner')
     ->handle($_SERVER['REQUEST_URI'] ?? '/', $_SERVER['REQUEST_METHOD'])
     ->send();
