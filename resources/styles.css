@@ -80,3 +80,11 @@ span.describes:hover > em {
     max-width: 25em;
     margin: auto;
 }
+form div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+textarea {
+    min-height: 3em;
+    width: 100%;
+}
