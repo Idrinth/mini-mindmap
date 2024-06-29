@@ -131,3 +131,6 @@ article {
     display: block;
     width: auto;
 }
+img[src=""] {
+    display: none;
+}

@@ -8,6 +8,19 @@ window.imm = {
         window.imm.mouseX = e.pageX;
         window.imm.mouseY = e.pageY;
     },
+    displayExport(value) {
+        const text = document.createElement('textarea');
+        text.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        text.value = value;
+        const wrapper = document.createElement('div');
+        wrapper.setAttribute('style', 'display:block');
+        wrapper.appendChild(text);
+        wrapper.setAttribute('class', 'modal-backdrop');
+        wrapper.addEventListener('click', () => document.body.removeChild(wrapper));
+        document.body.appendChild(wrapper);
+    },
     context(e) {
         if (document.getElementById('context-menu')) {
             document.body.removeChild(document.getElementById('context-menu'));
@@ -20,33 +33,13 @@ window.imm = {
             menu.lastElementChild.appendChild(document.createTextNode('Export Subtree as JSON'));
             menu.lastElementChild.addEventListener('click', async() => {
                 const response = await fetch(location.href  + '/node/' + e.target.parentElement.parentElement.getAttribute('data-uuid') + '/json');
-                const text = document.createElement('textarea');
-                text.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                });
-                text.value = await response.text();
-                const wrapper = document.createElement('div');
-                wrapper.setAttribute('style', 'display:block');
-                wrapper.appendChild(text);
-                wrapper.setAttribute('class', 'modal-backdrop');
-                wrapper.addEventListener('click', () => document.body.removeChild(wrapper));
-                document.body.appendChild(wrapper);
+                window.imm.displayExport(await response.text());
             });
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Export Subtree as XML'));
             menu.lastElementChild.addEventListener('click', async() => {
                 const response = await fetch(location.href  + '/node/' + e.target.parentElement.parentElement.getAttribute('data-uuid') + '/xml');
-                const text = document.createElement('textarea');
-                text.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                });
-                text.value = await response.text();
-                const wrapper = document.createElement('div');
-                wrapper.setAttribute('style', 'display:block');
-                wrapper.appendChild(text);
-                wrapper.setAttribute('class', 'modal-backdrop');
-                wrapper.addEventListener('click', () => document.body.removeChild(wrapper));
-                document.body.appendChild(wrapper);
+                window.imm.displayExport(await response.text());
             });
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Delete Subtree'));
@@ -102,11 +95,11 @@ window.imm = {
         button.setAttribute('onclick', "window.imm.add('" + uuid + "')");
         return button;
     },
-    createContentSpan({text, description, uuid}) {
+    createContentSpan({text, description, uuid, image}) {
         const span = document.createElement('span');
         span.setAttribute('onclick', "window.imm.edit('" + uuid + "')");
+        description || image ? span.classList.add('describes') : null;
         const info = document.createElement('strong');
-        span.setAttribute('class', description ? 'describes' : '');
         info.innerText = 'i';
         span.appendChild(info);
         const content = document.createElement('span');
@@ -115,13 +108,16 @@ window.imm = {
         const title = document.createElement('em');
         title.innerText = description ?? '';
         span.appendChild(title);
+        const img = document.createElement('img');
+        img.setAttribute('src', image ? `/images/${window.location.pathname.split('/')[1]}/${uuid}.${image}` : '');
+        span.appendChild(img);
         return span;
     },
-    createContentLi({text, description, uuid}) {
+    createContentLi({text, description, uuid, image}) {
         const li = document.createElement('li');
         li.setAttribute('id', 'node-' + uuid);
         li.setAttribute('data-uuid', uuid);
-        li.appendChild(window.imm.createContentSpan({text, description, uuid}));
+        li.appendChild(window.imm.createContentSpan({text, description, uuid, image}));
         li.appendChild(document.createElement('ul'));
         li.lastElementChild.appendChild(document.createElement('li'));
         li.lastElementChild.lastElementChild.appendChild(window.imm.createAddButton(uuid));
@@ -148,6 +144,7 @@ window.imm = {
                         el.firstElementChild.childNodes[0].setAttribute('class', node.description ? '' : 'hidden');
                         el.firstElementChild.childNodes[1].innerText = node.text;
                         el.firstElementChild.childNodes[2].innerText = node.description ?? '';
+                        el.firstElementChild.childNodes[3].setAttribute('src', node.image ? `/images/${window.location.pathname.split('/')[1]}/${node.uuid}.${node.image}` : '');
                     } else {
                         const parent = document.getElementById('node-'+node.parentUuid).lastElementChild;
                         parent.insertBefore(window.imm.createContentLi(node), parent.lastElementChild);
