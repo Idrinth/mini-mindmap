@@ -6,6 +6,7 @@ use De\Idrinth\MiniMindmap\Repository\Node;
 use De\Idrinth\MiniMindmap\Result;
 use De\Idrinth\MiniMindmap\Result\Html;
 use De\Idrinth\MiniMindmap\Result\Json;
+use De\Idrinth\MiniMindmap\Result\Xml;
 use Ramsey\Uuid\Uuid;
 use Throwable;
 use Webmozart\Assert\Assert;
@@ -35,7 +36,7 @@ class Mindmap
         Assert::uuid($node);
         Assert::oneOf($format, ['xml', 'json']);
         $mindmapId = $this->mindmap->uuidToId($id);
-        $result = new Json();
+        $result = $format === 'json' ? new Json() : new Xml();
         $node = $this->node->uuidToId($mindmapId, $node);
         $result->setContent($this->node->loadTree($node));
         return $result;

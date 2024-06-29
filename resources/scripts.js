@@ -22,7 +22,22 @@ window.imm = {
                 const response = await fetch(location.href  + '/node/' + e.target.parentElement.parentElement.getAttribute('data-uuid') + '/json');
                 const text = document.createElement('textarea');
                 text.addEventListener('click', (e) => {
-                   e.stopPropagation();
+                    e.stopPropagation();
+                });
+                text.value = await response.text();
+                const wrapper = document.createElement('div');
+                wrapper.setAttribute('style', 'display:block');
+                wrapper.appendChild(text);
+                wrapper.setAttribute('class', 'modal-backdrop');
+                wrapper.addEventListener('click', () => document.body.removeChild(wrapper));
+                document.body.appendChild(wrapper);
+            });
+            menu.lastElementChild.appendChild(document.createTextNode('Export Subtree as XML'));
+            menu.lastElementChild.addEventListener('click', async() => {
+                const response = await fetch(location.href  + '/node/' + e.target.parentElement.parentElement.getAttribute('data-uuid') + '/xml');
+                const text = document.createElement('textarea');
+                text.addEventListener('click', (e) => {
+                    e.stopPropagation();
                 });
                 text.value = await response.text();
                 const wrapper = document.createElement('div');
