@@ -17,7 +17,7 @@ class Xml extends Base
             $node = $doc->createElement('node');
             $node->setAttribute('uuid', $child['uuid']);
             $text = $doc->createElement('text');
-            $textContent = $doc->createTextNode($child['text']);
+            $textContent = $doc->createTextNode($child['text'] ?? '');
             $text->appendChild($textContent);
             $node->appendChild($text);
             if (isset($child['description'])) {
