@@ -15,6 +15,7 @@ class Xml extends Base
     {
         foreach ($children as $child) {
             $node = $doc->createElement('node');
+            $node->setAttribute('uuid', $child['uuid']);
             $text = $doc->createElement('text');
             $textContent = $doc->createTextNode($child['text']);
             $text->appendChild($textContent);
@@ -32,7 +33,9 @@ class Xml extends Base
                 $node->appendChild($image);
             }
             if (isset($child['children'])) {
-                $this->appendToParent($doc, $node, $child['children']);
+                $children = $doc->createElement('children');
+                $this->appendToParent($doc, $children, $child['children']);
+                $node->appendChild($children);
             }
             $parent->appendChild($node);
         }
