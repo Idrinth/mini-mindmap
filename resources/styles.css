@@ -123,6 +123,7 @@ article {
     color: #fff;
     padding: 0.1em;
     box-shadow: 1em 1em 3em rgba(0, 255, 0, 0.25);
+    border: 1px solid #fff;
 }
 #context-menu > li {
     display: block;

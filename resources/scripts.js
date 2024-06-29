@@ -21,7 +21,18 @@ window.imm = {
             menu.lastElementChild.addEventListener('click', () => window.alert('not yet implemented'));
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Delete Subtree'));
-            menu.lastElementChild.addEventListener('click', () => window.alert('not yet implemented'));
+            menu.lastElementChild.addEventListener('click', () => {
+                if (e.target.parentElement.parentElement === document.body) {
+                    return;
+                }
+                if (! window.confirm('Do you really want to delete this sub tree?')) {
+                    return;
+                }
+                e.target.parentElement.parentElement.removeChild(e.target.parentElement);
+                fetch(location.href  + '/node/' + e.target.parentElement.getAttribute('data-uuid'), {
+                    method: 'DELETE',
+                });
+            });
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Close'));
             menu.lastElementChild.addEventListener('click', () => document.body.removeChild(menu));
@@ -79,6 +90,7 @@ window.imm = {
     createContentLi({text, description, uuid}) {
         const li = document.createElement('li');
         li.setAttribute('id', 'node-' + uuid);
+        li.setAttribute('data-uuid', uuid);
         li.appendChild(window.imm.createContentSpan({text, description, uuid}));
         li.appendChild(document.createElement('ul'));
         li.lastElementChild.appendChild(document.createElement('li'));
@@ -118,16 +130,6 @@ window.imm = {
     async edit(nodeId) {
         const parent = document.getElementById('node-' + nodeId);
         const {text, description} = await window.imm.getEditedValues(parent.firstElementChild.childNodes[1].innerText, parent.firstElementChild.childNodes[2].innerText)
-        if (text === '') {
-            if (parent.parentElement.parentElement === document.body) {
-                return;
-            }
-            parent.parentElement.removeChild(parent);
-            await fetch(location.href  + '/node/' + nodeId, {
-                method: 'DELETE',
-            });
-            return;
-        }
         const changes = {};
         if (text !== parent.firstElementChild.childNodes[1].innerText) {
             if (parent.parentElement.parentElement === document.body) {
