@@ -9,7 +9,7 @@ class Setup
 {
     public function get(): Result
     {
-        if (is_file(dirname(__DIR__) . '/.env')) {
+        if (is_file(dirname(__DIR__, 2) . '/.env')) {
             $result = new Html();
             $result->setStatusCode(303);
             $result->addHeader('Location', '/');
@@ -24,7 +24,7 @@ class Setup
     }
     public function post(): Result
     {
-        if (is_file(dirname(__DIR__) . '/.env')) {
+        if (is_file(dirname(__DIR__, 2) . '/.env')) {
             $result = new Html();
             $result->setStatusCode(303);
             $result->addHeader('Location', '/');
