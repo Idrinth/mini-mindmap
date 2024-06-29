@@ -116,3 +116,9 @@ article {
         padding: 10%;
     }
 }
+#context-menu {
+    position: absolute;
+    width: auto;
+    background: darkgreen;
+    color: #fff;
+}

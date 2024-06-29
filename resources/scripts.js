@@ -3,7 +3,10 @@ window.imm = {
     paused: false,
     loading: 0,
     context(e) {
-        if (location.pathname.startsWith('/mindmap/') && e.target.localName === 'li') {
+        if (document.getElementById('context-menu')) {
+            document.body.removeChild(document.getElementById('context-menu'));
+        }
+        if (location.pathname.startsWith('/mindmap/') && e.target.localName === 'span') {
             e.preventDefault();
             const menu = document.createElement('ul');
             menu.setAttribute('id', 'context-menu');
@@ -16,6 +19,7 @@ window.imm = {
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Close'));
             menu.lastElementChild.addEventListener('click', () => document.body.removeChild(menu));
+            menu.setAttribute('style', 'left: '+e.target.clientLeft+'px;top:'+e.target.clientTop+'px');
             document.body.appendChild(menu);
         }
     },
