@@ -3,8 +3,20 @@ window.imm = {
     paused: false,
     loading: 0,
     context(e) {
-        if (location.pathname.startsWith('/mindmap/')) {
+        if (location.pathname.startsWith('/mindmap/') && e.target.localName === 'li') {
             e.preventDefault();
+            const menu = document.createElement('ul');
+            menu.setAttribute('id', 'context-menu');
+            menu.appendChild(document.createElement('li'));
+            menu.lastElementChild.appendChild(document.createTextNode('Export Subtree'));
+            menu.lastElementChild.addEventListener('click', () => window.alert('not yet implemented'));
+            menu.appendChild(document.createElement('li'));
+            menu.lastElementChild.appendChild(document.createTextNode('Delete Subtree'));
+            menu.lastElementChild.addEventListener('click', () => window.alert('not yet implemented'));
+            menu.appendChild(document.createElement('li'));
+            menu.lastElementChild.appendChild(document.createTextNode('Close'));
+            menu.lastElementChild.addEventListener('click', () => document.body.removeChild(menu));
+            document.body.appendChild(menu);
         }
     },
     async getEditedValues(defaultText = '', defaultDescription = '') {
@@ -13,7 +25,8 @@ window.imm = {
             document.getElementById('description').value = defaultDescription;
             document.getElementById('node-modification').setAttribute('style', 'display:block');
             document.getElementById('node-modification').getElementsByTagName('button')[0].onclick = () => {
-                document.getElementById('node-modification').setAttribute('style', 'display: none');                resolve({
+                document.getElementById('node-modification').setAttribute('style', 'display: none');
+                resolve({
                     text: defaultText,
                     description: defaultDescription,
                 });
@@ -165,3 +178,4 @@ window.imm = {
 window.addEventListener('blur', () => window.imm.paused = true);
 window.addEventListener('focus', () => window.imm.paused = false);
 window.addEventListener('contextmenu', window.imm.context);
+window.addEventListener('click', () => document.getElementById('context-menu')?.parentElement.removeChild(document.getElementById('context-menu')));
