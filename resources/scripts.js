@@ -2,6 +2,12 @@ window.imm = {
     since: new Date(),
     paused: false,
     loading: 0,
+    mouseX: 0,
+    mouseY: 0,
+    mouse(e) {
+        window.imm.mouseX = e.pageX;
+        window.imm.mouseY = e.pageY;
+    },
     context(e) {
         if (document.getElementById('context-menu')) {
             document.body.removeChild(document.getElementById('context-menu'));
@@ -19,7 +25,7 @@ window.imm = {
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Close'));
             menu.lastElementChild.addEventListener('click', () => document.body.removeChild(menu));
-            menu.setAttribute('style', 'left: '+e.target.clientLeft+'px;top:'+e.target.clientTop+'px');
+            menu.setAttribute('style', 'left: '+window.imm.mouseX+'px;top:'+window.imm.mouseY+'px');
             document.body.appendChild(menu);
         }
     },
@@ -183,3 +189,4 @@ window.addEventListener('blur', () => window.imm.paused = true);
 window.addEventListener('focus', () => window.imm.paused = false);
 window.addEventListener('contextmenu', window.imm.context);
 window.addEventListener('click', () => document.getElementById('context-menu')?.parentElement.removeChild(document.getElementById('context-menu')));
+box.addEventListener("mousemove", window.imm.mouse);
