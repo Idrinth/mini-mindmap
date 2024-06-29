@@ -29,6 +29,17 @@ class Mindmap
         ]);
         return $result;
     }
+    public function export(string $id, string $node, string $format): Result
+    {
+        Assert::uuid($id);
+        Assert::uuid($node);
+        Assert::oneOf($format, ['xml', 'json']);
+        $mindmapId = $this->mindmap->uuidToId($id);
+        $result = new Json();
+        $node = $this->node->uuidToId($mindmapId, $node);
+        $result->setContent($this->node->loadTree($node));
+        return $result;
+    }
     public function put(string $id, string $parent): Result
     {
         Assert::uuid($id);

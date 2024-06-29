@@ -13,6 +13,10 @@ class Image
     {
         return new Png();
     }
+    public function put():  Result
+    {
+        return new Png();
+    }
     public function logo():  Result
     {
         $result = new Svg();

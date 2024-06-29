@@ -87,6 +87,21 @@ class Node
         }
         return $this->get($id);
     }
+    public function loadTree(int $id): array
+    {
+        $node = $this->get($id);
+        $data = [
+            'uuid' => $node->uuid,
+            'text' => $node->text,
+            'image' => $node->image,
+            'description' => $node->description,
+            'children' => [],
+        ];
+        foreach ($this->getChildren($id) as $child) {
+            $data['children'][] = $this->loadTree($child->id);
+        }
+        return $data;
+    }
     public function delete(int $id): void
     {
         foreach ($this->getChildren($id) as $child) {

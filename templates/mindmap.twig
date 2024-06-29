@@ -1,14 +1,18 @@
 {% include 'header.twig' %}
 <h1>{{ mindmap.title }}</h1>
 <ul></ul>
-<form id="node-modification" style="display: none">
+<form id="node-modification" class="modal-backdrop" style="display: none">
     <div>
-        <label for="text">Text(empty to delete)</label>
-        <input id="text" type="text">
+        <label for="text">Text</label>
+        <input id="text" required type="text">
     </div>
     <div>
         <label for="description">Description(optional)</label>
         <textarea id="description"></textarea>
+    </div>
+    <div>
+        <label for="image">Description(optional)</label>
+        <input type="file" id="image">
     </div>
     <div>
         <button type="button">Close</button>
@@ -18,6 +22,5 @@
 <script>
     document.getElementsByTagName('ul')[0].appendChild(window.imm.createContentLi({{ root|json_encode|raw }}));
     window.imm.load('{{ root.uuid }}');
-    window.setTimeout(window.imm.update, 1000);
 </script>
 {% include 'footer.twig' %}

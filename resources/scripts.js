@@ -18,7 +18,20 @@ window.imm = {
             menu.setAttribute('id', 'context-menu');
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Export Subtree'));
-            menu.lastElementChild.addEventListener('click', () => window.alert('not yet implemented'));
+            menu.lastElementChild.addEventListener('click', async() => {
+                const response = await fetch(location.href  + '/node/' + e.target.parentElement.getAttribute('data-uuid') + '.json');
+                const text = document.createElement('textarea');
+                text.addEventListener('click', (e) => {
+                   e.stopPropagation();
+                });
+                text.value = await response.text();
+                const wrapper = document.createElement('div');
+                wrapper.setAttribute('style', 'display:block');
+                wrapper.appendChild(text);
+                wrapper.setAttribute('class', 'modal-backdrop');
+                wrapper.addEventListener('click', () => document.body.removeChild(wrapper));
+                document.body.appendChild(wrapper);
+            });
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Delete Subtree'));
             menu.lastElementChild.addEventListener('click', () => {
@@ -44,15 +57,16 @@ window.imm = {
         return new Promise((resolve) => {
             document.getElementById('text').value = defaultText;
             document.getElementById('description').value = defaultDescription;
-            document.getElementById('node-modification').setAttribute('style', 'display:block');
-            document.getElementById('node-modification').getElementsByTagName('button')[0].onclick = () => {
+            const wrapper = document.getElementById('node-modification');
+            wrapper.setAttribute('style', 'display:block');
+            wrapper.getElementsByTagName('button')[0].onclick = () => {
                 document.getElementById('node-modification').setAttribute('style', 'display: none');
                 resolve({
                     text: defaultText,
                     description: defaultDescription,
                 });
             }
-            document.getElementById('node-modification').getElementsByTagName('button')[1].onclick = () => {
+            wrapper.getElementsByTagName('button')[1].onclick = () => {
                 document.getElementById('node-modification').setAttribute('style', 'display: none');
                 const text = document.getElementById('text').value.trim();
                 const description = document.getElementById('description').value.trim();
@@ -192,3 +206,4 @@ window.addEventListener('focus', () => window.imm.paused = false);
 window.addEventListener('contextmenu', window.imm.context);
 window.addEventListener('click', () => document.getElementById('context-menu')?.parentElement.removeChild(document.getElementById('context-menu')));
 window.addEventListener("mousemove", window.imm.mouse);
+window.setTimeout(window.imm.update, 1000);
