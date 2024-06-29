@@ -189,4 +189,4 @@ window.addEventListener('blur', () => window.imm.paused = true);
 window.addEventListener('focus', () => window.imm.paused = false);
 window.addEventListener('contextmenu', window.imm.context);
 window.addEventListener('click', () => document.getElementById('context-menu')?.parentElement.removeChild(document.getElementById('context-menu')));
-box.addEventListener("mousemove", window.imm.mouse);
+window.addEventListener("mousemove", window.imm.mouse);
