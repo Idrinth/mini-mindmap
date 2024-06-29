@@ -34,7 +34,7 @@ if (is_file(dirname(__DIR__) . '/.env')) {
     ->register('delete', '/mindmap/{mindmap}', Mindmap::class)
     ->register('get', '/mindmap/{mindmap}/parent/{parent}', Mindmap::class, 'children')
     ->register('get', '/mindmap/{mindmap}/node/{node}', Mindmap::class, 'single')
-    ->register('get', '/mindmap/{mindmap}/node/{node}/{type:json}', Mindmap::class, 'export')
+    ->register('get', '/mindmap/{mindmap}/node/{node}/{type}', Mindmap::class, 'export')
     ->register('put', '/mindmap/{mindmap}/parent/{parent}', Mindmap::class)
     ->register('delete', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
     ->register('patch', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
