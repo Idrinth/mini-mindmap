@@ -9,7 +9,7 @@ class Node
     public ?int $parentId;
     public string $text;
     public ?string $description;
-    public ?string $image;
+    public ?string $image = null;
     public int $mindmapId;
     public ?string $parentUuid = null;
 }
