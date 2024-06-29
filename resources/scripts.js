@@ -19,7 +19,7 @@ window.imm = {
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Export Subtree'));
             menu.lastElementChild.addEventListener('click', async() => {
-                const response = await fetch(location.href  + '/node/' + e.target.parentElement.getAttribute('data-uuid') + '.json');
+                const response = await fetch(location.href  + '/node/' + e.target.parentElement.parentElement.getAttribute('data-uuid') + '.json');
                 const text = document.createElement('textarea');
                 text.addEventListener('click', (e) => {
                    e.stopPropagation();
