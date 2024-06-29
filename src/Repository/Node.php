@@ -100,7 +100,7 @@ class Node
         foreach ($this->getChildren($id) as $child) {
             $data['children'][] = $this->loadTree($child->id);
         }
-        return $data;
+        return array_filter($data);
     }
     public function delete(int $id): void
     {
