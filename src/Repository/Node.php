@@ -111,6 +111,9 @@ class Node
     }
     public function create(string $text, string $description, int $mindmapId, ?int $parentId = null): \De\Idrinth\MiniMindmap\Entity\Node
     {
+        if ($parentId !== null && ! $this->get($parentId)) {
+            throw new NotFoundException();
+        }
         $node = $parentId === null
             ? $this->database->prepare('INSERT INTO node (uuid, `text`, `description`, mindmap_id, parent_id, updated_at) VALUES (:uuid, :text, :description, :mindmapId, null, :now)')
             : $this->database->prepare('INSERT INTO node (uuid, `text`, `description`, mindmap_id, parent_id, updated_at) VALUES (:uuid, :text, :description, :mindmapId, :parentId, :now)');
