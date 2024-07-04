@@ -13,6 +13,7 @@ div.arrow {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
+    width: 1em;
 }
 li {
     display: grid;
