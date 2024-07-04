@@ -232,6 +232,7 @@ window.imm = {
         }
     },
     async load(nodeId) {
+        window.imm.rootUuid = window.imm.rootUuid ?? nodeId;
         window.imm.loading ++;
         const parent = document.getElementById('node-' + nodeId);
         const data = await fetch(location.href  + '/parent/' + nodeId);
