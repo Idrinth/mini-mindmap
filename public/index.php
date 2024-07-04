@@ -34,7 +34,6 @@ if (is_file(dirname(__DIR__) . '/.env')) {
     ->register('delete', '/mindmap/{mindmap}', Mindmap::class)
     ->register('get', '/mindmap/{mindmap}/parent/{parent}', Mindmap::class, 'children')
     ->register('get', '/mindmap/{mindmap}/node/{node}', Mindmap::class, 'single')
-    ->register('get', '/mindmap/{mindmap}/node/{node}/{type}', Mindmap::class, 'export')
     ->register('put', '/mindmap/{mindmap}/parent/{parent}', Mindmap::class)
     ->register('delete', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
     ->register('patch', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
@@ -43,5 +42,6 @@ if (is_file(dirname(__DIR__) . '/.env')) {
     ->register('put', '/image/{mindmap}/{image}', Image::class)
     ->register('get', '/imm.svg', Image::class, 'logo')
     ->register('get', '/idrinth-mini-mindmap.jpg', Image::class, 'banner')
+    ->register('get', '/arrow.svg', Image::class, 'arrow')
     ->handle($_SERVER['REQUEST_URI'] ?? '/', $_SERVER['REQUEST_METHOD'])
     ->send();

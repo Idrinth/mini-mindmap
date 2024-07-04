@@ -29,4 +29,10 @@ class Image
         $result->setContent('idrinth-mini-mindmap');
         return $result;
     }
+    public function arrow():  Result
+    {
+        $result = new Svg();
+        $result->setContent('arrow');
+        return $result;
+    }
 }
