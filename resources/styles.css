@@ -6,6 +6,11 @@ html {
 h1 {
     font-family: serif;
 }
+ul {
+    background-image: url("/arrow.svg");
+    background-repeat: no-repeat;
+    background-size: 100% 50%;
+}
 li {
     display: grid;
     grid-template-columns: 25em auto;
@@ -15,9 +20,6 @@ li {
     justify-items: left;
     align-items: center;
     border-bottom: 1px solid #030;
-    background-image: url("/arrow.svg");
-    background-repeat: no-repeat;
-    background-size: 100% 50%;
 }
 img {
     max-width: 100%;
