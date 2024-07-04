@@ -16,10 +16,9 @@ window.imm = {
             const uuid = li.getAttribute('data-uuid');
             window.setTimeout(() => window.imm.drawArrows(uuid), 1);
             const arrow = document.getElementById('arrow-'+nodeId+'-'+uuid) ?? (() => {
-                const arrow = document.createElement('img');
+                const arrow = document.createElement('div');
                 arrow.classList.add('arrow');
                 arrow.setAttribute('id', 'arrow-' + nodeId + '-' + uuid);
-                arrow.setAttribute('src', '/arrow.svg');
                 document.body.insertBefore(arrow, document.getElementsByTagName('h1')[0].nextElementSibling);
                 return arrow;
             })();
@@ -32,8 +31,7 @@ window.imm = {
             const deltaY = originTop - targetTop;
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
             const degrees = Math.asin(deltaY / deltaHyp)*360 + 45;
-            arrow.setAttribute('style', 'transform: rotate(-' + degrees + 'deg);width: 1em;left: '+originRight+'px;top: '+originTop+'px;');
-            arrow.setAttribute('height', deltaHyp);
+            arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;width: 1em;left: '+originRight+'px;top: '+originTop+'px;');
         }
     },
     mouse(e) {
