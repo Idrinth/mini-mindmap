@@ -31,8 +31,8 @@ window.imm = {
             const deltaX = originRight - targetLeft;
             const deltaY = originTop - targetTop;
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
-            const degrees = Math.asin(deltaY / deltaHyp) + 45;
-            arrow.setAttribute('style', 'rotate(' + degrees + 'deg);width: '+deltaHyp+'px;height: 1em;left: '+originRight+'px;top: '+originTop+'px;');
+            const degrees = Math.asin(deltaY / deltaHyp)*360 + 45;
+            arrow.setAttribute('style', 'rotate(' + degrees + 'deg);height: '+deltaHyp+'px;width: 1em;left: '+originRight+'px;top: '+originTop+'px;');
         }
     },
     mouse(e) {
