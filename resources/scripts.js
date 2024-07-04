@@ -183,7 +183,7 @@ window.imm = {
                 }
             }
         }
-        window.setTimeout(window.imm.drawArrows, 1);
+        window.setTimeout(() => window.imm.drawArrows(window.imm.rootUuid), 1);
         window.setTimeout(window.imm.update, 1000);
     },
     async edit(nodeId) {
@@ -211,7 +211,7 @@ window.imm = {
                 },
                 body: JSON.stringify(changes),
             });
-            window.setTimeout(window.imm.drawArrows, 1);
+            window.setTimeout(() => window.imm.drawArrows(window.imm.rootUuid), 1);
         }
     },
     async add(parentId) {
