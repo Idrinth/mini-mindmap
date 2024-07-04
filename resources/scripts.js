@@ -20,7 +20,7 @@ window.imm = {
                 arrow.classList.add('arrow');
                 arrow.setAttribute('id', 'arrow-' + nodeId + '-' + uuid);
                 arrow.setAttribute('src', '/arrow.svg');
-                document.body.insertBefore(document.body.firstChild, arrow);
+                document.body.insertBefore(arrow, document.getElementsByTagName('h1')[0].nextElementSibling);
                 return arrow;
             })();
             const target = li.getBoundingClientRect();
