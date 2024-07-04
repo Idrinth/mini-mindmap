@@ -15,6 +15,9 @@ li {
     justify-items: left;
     align-items: center;
     border-bottom: 1px solid #030;
+    background-image: url("/arrow.svg");
+    background-repeat: no-repeat;
+    background-size: 100% 50%;
 }
 img {
     max-width: 100%;
