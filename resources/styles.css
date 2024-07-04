@@ -8,6 +8,7 @@ h1 {
 }
 img.arrow {
     position: absolute;
+    transform-origin: bottom left;
 }
 li {
     display: grid;

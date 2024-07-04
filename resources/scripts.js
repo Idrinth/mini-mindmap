@@ -6,7 +6,7 @@ window.imm = {
     mouseX: 0,
     mouseY: 0,
     drawArrows(nodeId) {
-        const nodes = document.getElementById('node-'+nodeId).lastElementChild.children;
+        const nodes = document.getElementById('node-'+nodeId)?.lastElementChild.children;
         if (! nodes || ! nodes.length) {
             return;
         }
@@ -32,7 +32,7 @@ window.imm = {
             const deltaY = originTop - targetTop;
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
             const degrees = Math.asin(deltaY / deltaHyp) + 45;
-            arrow.setAttribute('style', 'rotate(' + degrees + 'deg);width: '+deltaHyp+'px;height: 1em;left: '+left+'px;top: '+top+'px;');
+            arrow.setAttribute('style', 'rotate(' + degrees + 'deg);width: '+deltaHyp+'px;height: 1em;left: '+originRight+'px;top: '+originTop+'px;');
         }
     },
     mouse(e) {
