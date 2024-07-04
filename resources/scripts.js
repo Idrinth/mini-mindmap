@@ -1,9 +1,40 @@
 window.imm = {
     since: new Date(),
     paused: false,
+    rootUuid: null,
     loading: 0,
     mouseX: 0,
     mouseY: 0,
+    drawArrows(nodeId) {
+        const nodes = document.getElementById('node-'+nodeId).lastElementChild.children;
+        if (! nodes || ! nodes.length) {
+            return;
+        }
+        const source = document.getElementById('node-'+nodeId).firstElementChild.getBoundingClientRect();
+        for (let i = 0; i < nodes.length; i++) {
+            const li= nodes.item(i);
+            const uuid = li.getAttribute('data-uuid');
+            window.setTimeout(() => window.imm.drawArrows(uuid), 1);
+            const arrow = document.getElementById('arrow-'+nodeId+'-'+uuid) ?? (() => {
+                const arrow = document.createElement('img');
+                arrow.classList.add('arrow');
+                arrow.setAttribute('id', 'arrow-' + nodeId + '-' + uuid);
+                arrow.setAttribute('src', '/arrow.svg');
+                document.body.insertBefore(document.body.firstChild, arrow);
+                return arrow;
+            })();
+            const target = li.getBoundingClientRect();
+            const originRight = source.left + source.width;
+            const originTop = source.top;
+            const targetLeft = target.left;
+            const targetTop = target.top;
+            const deltaX = originRight - targetLeft;
+            const deltaY = originTop - targetTop;
+            const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
+            const degrees = Math.asin(deltaY / deltaHyp) + 45;
+            arrow.setAttribute('style', 'rotate(' + degrees + 'deg);width: '+deltaHyp+'px;height: 1em;left: '+left+'px;top: '+top+'px;');
+        }
+    },
     mouse(e) {
         window.imm.mouseX = e.pageX;
         window.imm.mouseY = e.pageY;
@@ -152,6 +183,7 @@ window.imm = {
                 }
             }
         }
+        window.setTimeout(window.imm.drawArrows, 1);
         window.setTimeout(window.imm.update, 1000);
     },
     async edit(nodeId) {
@@ -179,6 +211,7 @@ window.imm = {
                 },
                 body: JSON.stringify(changes),
             });
+            window.setTimeout(window.imm.drawArrows, 1);
         }
     },
     async add(parentId) {

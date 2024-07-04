@@ -6,10 +6,8 @@ html {
 h1 {
     font-family: serif;
 }
-div.arrow {
-    background-image: url("/arrow.svg");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+img.arrow {
+    position: absolute;
 }
 li {
     display: grid;
