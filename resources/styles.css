@@ -10,6 +10,7 @@ div.arrow {
     position: absolute;
     background-size: 100% 100%;
     width: 1em;
+    background-color: rgba(0,255,0,0.1);
     background-image: url("/arrow.svg");
     background-repeat: no-repeat;
     background-position: center;
