@@ -10,12 +10,9 @@ div.arrow {
     position: absolute;
     background-size: 100% 100%;
     width: 1em;
-}
-div.arrow > div {
     background-image: url("/arrow.svg");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100% 100%;
 }
 li {
     display: grid;

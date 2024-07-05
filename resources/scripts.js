@@ -17,7 +17,6 @@ window.imm = {
             //window.setTimeout(() => window.imm.drawArrows(uuid), 1);
             const arrow = document.getElementById('arrow-'+nodeId+'-'+uuid) ?? (() => {
                 const arrow = document.createElement('div');
-                arrow.appendChild(document.createElement('div'));
                 arrow.classList.add('arrow');
                 arrow.setAttribute('id', 'arrow-' + nodeId + '-' + uuid);
                 document.body.insertBefore(arrow, document.getElementsByTagName('h1')[0].nextElementSibling);
@@ -32,8 +31,7 @@ window.imm = {
             const deltaY = Math.abs(targetTop - originTop);
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
             const degrees = Math.asin(deltaX / deltaHyp)+90;
-            arrow.firstElementChild.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;transform-origin: '+originRight+'px '+originTop+'px;');
-            arrow.setAttribute('style', 'left: '+(originRight)+'px;top: '+Math.min(originTop, originTop)+'px;');
+            arrow.firstElementChild.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+(originRight+deltaX/2)+'px;top: '+Math.max(originTop, originTop)+'px;transform-origin: '+originRight+'px '+originTop+'px;');
         }
     },
     getBoundingClientRect(element) {
