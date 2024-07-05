@@ -23,9 +23,9 @@ window.imm = {
                 return arrow;
             })();
             const target = window.imm.getBoundingClientRect(li);
-            const originRight = source.left + source.width;
+            const originRight = source.left + source.width + 10;
             const originTop = source.top + source.height/2;
-            const targetLeft = target.left;
+            const targetLeft = target.left +10;
             const targetTop = target.top + source.height/2;
             const deltaX = Math.abs(targetLeft - originRight);
             const deltaY = Math.abs(targetTop - originTop);
@@ -35,10 +35,10 @@ window.imm = {
         }
     },
     getBoundingClientRect(element) {
-        if (! element.parentElement) {
+        if (! element.offsetParent) {
             return {left: 0, top: 0, width: 0, height: 0}
         }
-        const parent = imm.getBoundingClientRect(element.parentElement);
+        const parent = imm.getBoundingClientRect(element.offsetParent);
         const rect = element.getBoundingClientRect();
         return {left: parent.left + element.offsetLeft, top: parent.top + element.offsetTop, width: rect.width, height: rect.height};
     },
