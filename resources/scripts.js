@@ -31,14 +31,11 @@ window.imm = {
             const deltaY = Math.abs(targetTop - originTop);
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
             const degrees = Math.asin(deltaX / deltaHyp)*360;
-            arrow.setAttribute('style', 'transform: rotate(' + 90 + 'deg);height: '+deltaHyp+'px;left: '+originRight+'px;top: '+Math.max(originTop, originTop)+'px;transform-origin: '+originRight+'px '+originTop+'px;');
+            arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+originRight+'px;top: '+Math.max(originTop, originTop)+'px;transform-origin: '+originRight+'px '+originTop+'px;');
         }
     },
     getBoundingClientRect(element) {
-        if (! element.offsetParent) {
-            return {left: 0, top: 0, width: 0, height: 0}
-        }
-        const parent = imm.getBoundingClientRect(element.offsetParent);
+        const parent = element.offsetParent ? imm.getBoundingClientRect(element.offsetParent) : {left: 0, top: 0, width: 0, height: 0};
         const rect = element.getBoundingClientRect();
         return {left: parent.left + element.offsetLeft, top: parent.top + element.offsetTop, width: rect.width, height: rect.height};
     },
