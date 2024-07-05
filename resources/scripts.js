@@ -32,7 +32,7 @@ window.imm = {
             const deltaX = targetLeft - originRight;
             const deltaY = targetTop - originTop;
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
-            const degrees = Math.asin(deltaY / deltaHyp)+90;
+            const degrees = Math.atan(deltaX / deltaY)+90;
             arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+(originRight+deltaX/2)+'px;top: '+originTop+'px;border-right: 1px solid darkgreen; transform-origin: '+originRight+'px '+originTop+'px;');
         }
         const arrows = document.getElementsByClassName('arrow');
