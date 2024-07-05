@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<?xml version="1.0" encoding="utf-8"?>
 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path transform="scale(1, -1)" d="M12 4V20M12 4L8 8M12 4L16 8" stroke="#32623b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 12 20 L 12 4 M 12 20 L 8 16 M 12 20 L 16 16" stroke="#32623b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style=""/>
 </svg>
