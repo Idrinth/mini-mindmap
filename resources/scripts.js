@@ -24,9 +24,9 @@ window.imm = {
             })();
             const target = window.imm.getBoundingClientRect(li);
             const originRight = source.left + source.width + 10;
-            const originTop = source.top + source.height/2;
+            const originTop = source.top - source.height/2;
             const targetLeft = target.left - 10;
-            const targetTop = target.top + source.height/2;
+            const targetTop = target.top - target.height/2;
             const deltaX = targetLeft - originRight;
             const deltaY = targetTop - originTop;
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
