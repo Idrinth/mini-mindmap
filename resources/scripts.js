@@ -11,7 +11,6 @@ window.imm = {
             return;
         }
         const source = window.imm.getBoundingClientRect(document.getElementById('node-'+nodeId).firstElementChild);
-        console.log(source);
         for (let i = 0; i < nodes.length; i++) {
             const li= nodes.item(i);
             const uuid = li.getAttribute('data-uuid');
@@ -24,7 +23,6 @@ window.imm = {
                 return arrow;
             })();
             const target = window.imm.getBoundingClientRect(li);
-            console.log(target);
             const originRight = source.left + source.width;
             const originTop = source.top + source.height/2;
             const targetLeft = target.left;
@@ -32,7 +30,7 @@ window.imm = {
             const deltaX = Math.abs(targetLeft - originRight);
             const deltaY = Math.abs(targetTop - originTop);
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
-            const degrees = Math.asin(deltaX / deltaHyp)*360;
+            const degrees = Math.asin(deltaX / deltaHyp)*360 + 90;
             arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+originRight+'px;top: '+Math.max(originTop, originTop)+'px;transform-origin: '+originRight+'px '+originTop+'px;');
         }
     },
