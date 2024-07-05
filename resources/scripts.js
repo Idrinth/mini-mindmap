@@ -10,7 +10,7 @@ window.imm = {
         if (! nodes || ! nodes.length) {
             return;
         }
-        const source = document.getElementById('node-'+nodeId).firstElementChild.getBoundingClientRect();
+        const source = window.imm.getBoundingClientRect(document.getElementById('node-'+nodeId).firstElementChild);
         for (let i = 0; i < nodes.length; i++) {
             const li= nodes.item(i);
             const uuid = li.getAttribute('data-uuid');
@@ -22,7 +22,7 @@ window.imm = {
                 document.body.insertBefore(arrow, document.getElementsByTagName('h1')[0].nextElementSibling);
                 return arrow;
             })();
-            const target = li.getBoundingClientRect();
+            const target = window.imm.getBoundingClientRect(li);
             const originRight = source.left + source.width;
             const originTop = source.top + source.height/2;
             const targetLeft = target.left;
@@ -33,6 +33,14 @@ window.imm = {
             const degrees = Math.asin(deltaX / deltaHyp)*360 - 180;
             arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+originRight+'px;bottom: '+source.bottom+'px;transform-origin: '+originRight+'px '+source.bottom+'px;');
         }
+    },
+    getBoundingClientRect(element) {
+        if (! element.parentElement) {
+            return {left: 0, top: 0, width: 0, height: 0}
+        }
+        const parent = imm.getBoundingClientRect(element.parentElement);
+        const rect = element.getBoundingClientRect();
+        return {left: parent.left + element.offsetLeft, top: parent.top + element.offsetTop, width: rect.width, height: rect.height};
     },
     mouse(e) {
         window.imm.mouseX = e.pageX;
