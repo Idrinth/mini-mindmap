@@ -30,8 +30,8 @@ window.imm = {
             const deltaX = Math.abs(targetLeft - originRight);
             const deltaY = Math.abs(targetTop - originTop);
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
-            const degrees = Math.asin(deltaX / deltaHyp)*360 - 180;
-            arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+originRight+'px;top: '+Math.max(originTop, originTop)+'px;transform-origin: '+originRight+'px '+source.bottom+'px;');
+            const degrees = Math.asin(deltaX / deltaHyp)*360;
+            arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+originRight+'px;top: '+Math.max(originTop, originTop)+'px;transform-origin: '+originRight+'px '+originTop+'px;');
         }
     },
     getBoundingClientRect(element) {
