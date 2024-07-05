@@ -22,7 +22,7 @@ window.imm = {
                 document.body.insertBefore(arrow, document.getElementsByTagName('h1')[0].nextElementSibling);
                 return arrow;
             })();
-            const target = window.imm.getBoundingClientRect(li);
+            const target = window.imm.getBoundingClientRect(li.firstElementChild);
             const originRight = source.left + source.width + 10;
             const originTop = source.top - source.height/2;
             const targetLeft = target.left - 10;
