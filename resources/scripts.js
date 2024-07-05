@@ -39,7 +39,7 @@ window.imm = {
                 arrow.setAttribute('style', 'transform: rotate(90deg);height: '+deltaY+'px;left: '+originRight+'px;top:'+originTop+'px;');
             } else {
                 const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                const degrees = Math.atan(deltaX / deltaY) * 120 + 90;
+                const degrees = Math.atan(deltaX / deltaY) * 60 + 90;
                 arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: ' + deltaHyp + 'px;left: ' + originRight + 'px;top:' + originTop + 'px;');
             }
             pos++;
