@@ -33,7 +33,7 @@ window.imm = {
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
             const degrees = Math.asin(deltaX / deltaHyp)+90;
             arrow.firstElementChild.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;transform-origin: '+originRight+'px '+originTop+'px;');
-            arrow.setAttribute('style', 'left: '+(originRight+100)+'px;top: '+Math.max(originTop, originTop)+'px;');
+            arrow.setAttribute('style', 'left: '+(originRight)+'px;top: '+Math.min(originTop, originTop)+'px;');
         }
     },
     getBoundingClientRect(element) {
