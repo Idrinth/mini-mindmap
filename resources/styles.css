@@ -16,8 +16,6 @@ div.arrow {
     background-repeat: no-repeat;
     background-position: center;
     transform-origin: 0 0;
-    border-right: 1px solid darkgreen;
-    border-left: 1px solid darkgreen;
 }
 li {
     display: grid;
