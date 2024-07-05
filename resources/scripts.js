@@ -25,13 +25,13 @@ window.imm = {
             const target = window.imm.getBoundingClientRect(li);
             const originRight = source.left + source.width + 10;
             const originTop = source.top + source.height/2;
-            const targetLeft = target.left -10;
+            const targetLeft = target.left - 10;
             const targetTop = target.top + source.height/2;
             const deltaX = Math.abs(targetLeft - originRight);
             const deltaY = Math.abs(targetTop - originTop);
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
             const degrees = Math.asin(deltaX / deltaHyp)+90;
-            arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+(originRight+deltaX/2)+'px;top: '+(Math.max(originTop, originTop)-deltaY)+'px;transform-origin: '+originRight+'px '+originTop+'px;');
+            arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+(originRight+deltaX/2)+'px;top: '+(Math.min(originTop, originTop)-deltaY)+'px;transform-origin: '+originRight+'px '+originTop+'px;');
         }
     },
     getBoundingClientRect(element) {
