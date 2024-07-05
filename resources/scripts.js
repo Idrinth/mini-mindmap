@@ -36,7 +36,7 @@ window.imm = {
             arrow.setAttribute('data-x', deltaX);
             arrow.setAttribute('data-y', deltaY);
             if (deltaY < 1 && deltaY > -1) {
-                arrow.setAttribute('style', 'transform: rotate(90deg);height: '+deltaY+'px;left: '+originRight+'px;top:'+originTop+'px;');
+                arrow.setAttribute('style', 'transform: rotate(90deg);height: '+deltaX+'px;left: '+originRight+'px;top:'+originTop+'px;');
             } else {
                 const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
                 const degrees = Math.tan(deltaY / deltaX)/Math.PI * 120 + 90 + 180;

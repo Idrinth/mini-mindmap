@@ -14,7 +14,6 @@ div.arrow {
     background-image: url("/arrow.svg");
     background-repeat: no-repeat;
     background-position: center;
-    border-right: darkgreen solid 1px;
     transform-origin: 0 0;
 }
 li {
