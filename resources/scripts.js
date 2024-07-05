@@ -11,6 +11,7 @@ window.imm = {
             return;
         }
         const source = window.imm.getBoundingClientRect(document.getElementById('node-'+nodeId).firstElementChild);
+        let pos = 0;
         for (let i = 0; i < nodes.length; i++) {
             const li= nodes.item(i);
             const uuid = li.getAttribute('data-uuid');
@@ -31,6 +32,7 @@ window.imm = {
             const targetTop = target.top + target.height/2;
             const deltaX = targetLeft - originRight;
             const deltaY = targetTop - originTop;
+            arrow.setAttribute('data-child-pos', pos);
             if (deltaY < 1 && deltaY > -1) {
                 arrow.setAttribute('style', 'transform: rotate(90deg);height: '+deltaY+'px;left: '+originRight+'px;top:'+originTop+'px;');
             } else {
@@ -38,6 +40,7 @@ window.imm = {
                 const degrees = Math.atan(deltaX / deltaY) * 180 + 90;
                 arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: ' + deltaHyp + 'px;left: ' + originRight + 'px;top:' + originTop + 'px;');
             }
+            pos++;
         }
         const arrows = document.getElementsByClassName('arrow');
         for (let i = arrows.length-1; i >= 0; i--) {
