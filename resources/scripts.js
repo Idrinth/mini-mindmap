@@ -13,7 +13,7 @@ window.imm = {
         const source = window.imm.getBoundingClientRect(document.getElementById('node-'+nodeId).firstElementChild);
         let pos = 0;
         for (let i = 0; i < nodes.length; i++) {
-            const li= nodes.item(i);
+            const li= nodes.item(i+1);
             const uuid = li.getAttribute('data-uuid');
             window.setTimeout(() => window.imm.drawArrows(uuid), 1);
             const arrow = document.getElementById('arrow-'+nodeId+'-'+uuid) ?? (() => {
