@@ -21,7 +21,7 @@ window.imm = {
                 arrow.setAttribute('id', 'arrow-' + nodeId + '-' + uuid);
                 arrow.setAttribute('data-from', nodeId);
                 arrow.setAttribute('data-to', uuid);
-                document.body.insertBefore(arrow, document.getElementsByTagName('h1')[0].nextElementSibling);
+                document.getElementById('node-'+nodeId).insertBefore(arrow, document.getElementById('node-'+nodeId).lastElementChild);
                 return arrow;
             })();
             const target = window.imm.getBoundingClientRect(li.firstElementChild);
@@ -44,7 +44,7 @@ window.imm = {
             const from = arrows[i].getAttribute('data-from');
             const to = arrows[i].getAttribute('data-to');
             if (! document.getElementById('node-'+from) || (to !== 'null' && ! document.getElementById('node-'+to))) {
-                document.body.removeChild(arrows[i]);
+                arrows[i].parentElement.removeChild(arrows[i]);
             }
         }
     },
