@@ -19,6 +19,8 @@ window.imm = {
                 const arrow = document.createElement('div');
                 arrow.classList.add('arrow');
                 arrow.setAttribute('id', 'arrow-' + nodeId + '-' + uuid);
+                arrow.setAttribute('data-from', nodeId);
+                arrow.setAttribute('data-to', uuid);
                 document.body.insertBefore(arrow, document.getElementsByTagName('h1')[0].nextElementSibling);
                 return arrow;
             })();
@@ -32,6 +34,14 @@ window.imm = {
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
             const degrees = Math.asin(deltaY / deltaHyp)+90;
             arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;left: '+(originRight+deltaX/2)+'px;top: '+originTop+'px;border-right: 1px solid darkgreen; transform-origin: '+originRight+'px '+originTop+'px;');
+        }
+        const arrows = document.getElementsByClassName('arrow');
+        for (let i = arrows.length-1; i >= 0; i--) {
+            const from = arrows[i].getAttribute('data-from');
+            const to = arrows[i].getAttribute('data-to');
+            if (! document.getElementById('node-'+from) || (to!=='null' && ! document.getElementById('node-'+to))) {
+                document.body.removeChild(arrows[i]);
+            }
         }
     },
     getBoundingClientRect(element) {
