@@ -39,7 +39,7 @@ window.imm = {
         for (let i = arrows.length-1; i >= 0; i--) {
             const from = arrows[i].getAttribute('data-from');
             const to = arrows[i].getAttribute('data-to');
-            if (! document.getElementById('node-'+from) || (to!=='null' && ! document.getElementById('node-'+to))) {
+            if (! document.getElementById('node-'+from) || (to !== 'null' && ! document.getElementById('node-'+to))) {
                 document.body.removeChild(arrows[i]);
             }
         }
