@@ -32,7 +32,7 @@ window.imm = {
             const deltaX = targetLeft - originRight;
             const deltaY = targetTop - originTop;
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const degrees = Math.atan(deltaX / deltaY)+90;
+            const degrees = Math.atan(deltaX / deltaY)*360+90;
             arrow.setAttribute('data-delta-y', deltaY);
             arrow.setAttribute('data-delta-x', deltaX);
             arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px; transform-origin: '+originRight+'px '+originTop+'px;');
