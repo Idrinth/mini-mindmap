@@ -30,7 +30,7 @@ window.imm = {
             const deltaX = originRight - targetLeft;
             const deltaY = originTop - targetTop;
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY + 2 * deltaX * deltaY);
-            const degrees = Math.asin(deltaY / deltaHyp)*360 + 90;
+            const degrees = Math.asin(deltaX / deltaHyp)*360;
             arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px;width: 1em;left: '+originRight+'px;bottom: '+source.bottom+'px;');
         }
     },
