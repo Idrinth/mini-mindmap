@@ -9,7 +9,7 @@ h1 {
 div.arrow {
     position: absolute;
     background-size: 100% 100%;
-    width: 1em;
+    width: 40px;
     background-color: rgba(0,255,0,0.01);
     background-image: url("/arrow.svg");
     background-repeat: no-repeat;
