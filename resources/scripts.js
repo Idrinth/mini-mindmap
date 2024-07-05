@@ -32,7 +32,19 @@ window.imm = {
             const deltaX = targetLeft - originRight;
             const deltaY = targetTop - originTop;
             const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const degrees = Math.atan(deltaX / deltaY)*180+90;
+            let degrees = Math.atan(deltaX / deltaY)*180+90;
+            while (degrees > 360) {
+                degrees -= 360;
+            }
+            while (degrees < -360) {
+                degrees += 360;
+            }
+            if (degrees > 180) {
+                degrees = -1 * (degrees - 180);
+            }
+            if (degrees < -180) {
+                degrees = -1 * (degrees + 180);
+            }
             arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: '+deltaHyp+'px; transform-origin: '+originRight+'px '+originTop+'px;');
         }
         const arrows = document.getElementsByClassName('arrow');
