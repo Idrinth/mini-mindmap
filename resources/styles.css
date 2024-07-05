@@ -51,6 +51,10 @@ button {
     color: #fff;
     cursor: pointer;
 }
+li > span,
+button {
+    display: block;
+}
 span > strong {
     color: #fff;
     border-radius: 50%;
