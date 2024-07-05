@@ -35,7 +35,7 @@ window.imm = {
                 arrow.setAttribute('style', 'transform: rotate(90deg);height: '+deltaY+'px;left: '+originRight+'px;top:'+originTop+'px;');
             } else {
                 const deltaHyp = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                const degrees = Math.atan(deltaX / deltaY) * 180 + 90;
+                const degrees = Math.atan(deltaY / deltaX) * 180 + 90;
                 arrow.setAttribute('style', 'transform: rotate(' + degrees + 'deg);height: ' + deltaHyp + 'px;left: ' + originRight + 'px;top:' + originTop + 'px;');
             }
         }
