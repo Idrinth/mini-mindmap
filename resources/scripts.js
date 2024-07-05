@@ -11,6 +11,7 @@ window.imm = {
             return;
         }
         const source = window.imm.getBoundingClientRect(document.getElementById('node-'+nodeId).firstElementChild);
+        console.log(source);
         for (let i = 0; i < nodes.length; i++) {
             const li= nodes.item(i);
             const uuid = li.getAttribute('data-uuid');
@@ -23,6 +24,7 @@ window.imm = {
                 return arrow;
             })();
             const target = window.imm.getBoundingClientRect(li);
+            console.log(target);
             const originRight = source.left + source.width;
             const originTop = source.top + source.height/2;
             const targetLeft = target.left;
