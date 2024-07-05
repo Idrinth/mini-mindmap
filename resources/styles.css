@@ -7,6 +7,7 @@ h1 {
     font-family: serif;
 }
 div.arrow {
+    box-sizing: border-box;
     position: absolute;
     background-size: 100% 100%;
     width: 40px;
@@ -15,6 +16,8 @@ div.arrow {
     background-repeat: no-repeat;
     background-position: center;
     transform-origin: 0 0;
+    border-right: 1px solid darkgreen;
+    border-left: 1px solid darkgreen;
 }
 li {
     display: grid;
