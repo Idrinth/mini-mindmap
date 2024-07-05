@@ -14,7 +14,7 @@ window.imm = {
         for (let i = 0; i < nodes.length; i++) {
             const li= nodes.item(i);
             const uuid = li.getAttribute('data-uuid');
-            window.setTimeout(() => window.imm.drawArrows(uuid), 1);
+            //window.setTimeout(() => window.imm.drawArrows(uuid), 1);
             const arrow = document.getElementById('arrow-'+nodeId+'-'+uuid) ?? (() => {
                 const arrow = document.createElement('div');
                 arrow.classList.add('arrow');
