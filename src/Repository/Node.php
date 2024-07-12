@@ -130,4 +130,17 @@ class Node
         $id = $this->database->lastInsertId();
         return $this->get($id);
     }
+
+    public function image(int $nodeId, ?string $ext): bool|int
+    {
+        if (! $this->get($nodeId)) {
+            throw new NotFoundException();
+        }
+        return match ($ext) {
+            'png' => $this->database->exec('UPDATE node SET image="png" WHERE id='.$nodeId),
+            'gif' => $this->database->exec('UPDATE node SET image="gif" WHERE id='.$nodeId),
+            'jpg' => $this->database->exec('UPDATE node SET image="jpeg" WHERE id='.$nodeId),
+            default => $this->database->exec('UPDATE node SET image=null WHERE id='.$nodeId),
+        };
+    }
 }

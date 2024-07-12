@@ -38,7 +38,7 @@ if (is_file(dirname(__DIR__) . '/.env')) {
     ->register('delete', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
     ->register('patch', '/mindmap/{mindmap}/node/{node}', Mindmap::class)
     ->register('get', '/mindmap/{mindmap}/since/{since}', Latest::class)
-    ->register('get', '/image/{mindmap}/{image}.(jpg|png|gif)', Image::class)
+    ->register('get', '/image/{mindmap}/{image}', Image::class)
     ->register('put', '/image/{mindmap}/{image}', Image::class)
     ->register('get', '/imm.svg', Image::class, 'logo')
     ->register('get', '/idrinth-mini-mindmap.jpg', Image::class, 'banner')

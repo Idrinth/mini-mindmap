@@ -163,7 +163,7 @@ window.imm = {
         title.innerText = description ?? '';
         span.appendChild(title);
         const img = document.createElement('img');
-        img.setAttribute('src', image ? `/images/${window.location.pathname.split('/')[1]}/${uuid}.${image}` : '');
+        img.setAttribute('src', image ? `/images/${window.location.pathname.split('/')[1]}/${uuid}` : '');
         span.appendChild(img);
         return span;
     },
