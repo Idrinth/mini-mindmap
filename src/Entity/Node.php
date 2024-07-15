@@ -2,7 +2,9 @@
 
 namespace De\Idrinth\MiniMindmap\Entity;
 
-class Node
+use JsonSerializable;
+
+class Node implements JsonSerializable
 {
     public ?int $id;
     public string $uuid;
@@ -12,4 +14,15 @@ class Node
     public ?string $image = null;
     public int $mindmapId;
     public ?string $parentUuid = null;
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            "uuid" => $this->uuid,
+            "parentUuid" => $this->parentUuid,
+            "text" => $this->text,
+            "description" => $this->description,
+            "image" => $this->image,
+        ];
+    }
 }

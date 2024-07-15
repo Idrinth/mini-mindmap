@@ -20,7 +20,6 @@
     </div>
 </form>
 <script>
-    document.getElementsByTagName('ul')[0].appendChild(window.imm.createContentLi({{ root|json_encode|raw }}));
-    window.imm.load('{{ root.uuid }}');
+    window.imm.init({{ root|json_encode|raw }});
 </script>
 {% include 'footer.twig' %}

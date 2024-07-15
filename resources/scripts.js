@@ -255,7 +255,6 @@ window.imm = {
         }
     },
     async load(nodeId) {
-        window.imm.rootUuid = window.imm.rootUuid ?? nodeId;
         window.imm.loading ++;
         const parent = document.getElementById('node-' + nodeId);
         const data = await fetch(location.href  + '/parent/' + nodeId);
@@ -269,11 +268,17 @@ window.imm = {
             }
         }
         window.imm.loading --;
+    },
+    init(root) {
+        window.addEventListener('blur', () => window.imm.paused = true);
+        window.addEventListener('focus', () => window.imm.paused = false);
+        window.addEventListener('contextmenu', window.imm.context);
+        window.addEventListener('click', () => document.getElementById('context-menu')?.parentElement.removeChild(document.getElementById('context-menu')));
+        window.addEventListener("mousemove", window.imm.mouse);
+        window.imm.rootUuid = root.uuid;
+        document.getElementsByTagName('ul')[0].appendChild(window.imm.createContentLi(root));
+        window.setTimeout(() => window.imm.load(root.uuid), 0);
+        window.setTimeout(window.imm.update, 1000);
     }
 };
-window.addEventListener('blur', () => window.imm.paused = true);
-window.addEventListener('focus', () => window.imm.paused = false);
-window.addEventListener('contextmenu', window.imm.context);
-window.addEventListener('click', () => document.getElementById('context-menu')?.parentElement.removeChild(document.getElementById('context-menu')));
-window.addEventListener("mousemove", window.imm.mouse);
-window.setTimeout(window.imm.update, 1000);
+
