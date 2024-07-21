@@ -16,7 +16,7 @@ date_default_timezone_set('UTC');
 
 if (is_file(dirname(__DIR__) . '/.env')) {
     Dotenv::createImmutable(dirname(__DIR__))->load();
-    exec(__DIR__ . '/../vendor/bin/phinx migrate');
+    exec('cd ' . __DIR__ . '/.. && ' . __DIR__ . '/../vendor/bin/phinx migrate');
 }
 
 (new Application())
