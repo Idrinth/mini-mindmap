@@ -58,7 +58,9 @@ class Node
             ':id' => $id,
         ]);
         $node->setFetchMode(PDO::FETCH_CLASS, \De\Idrinth\MiniMindmap\Entity\Node::class);
-        return $node->fetch() ?: throw new NotFoundException();
+        $data = $node->fetch() ?: throw new NotFoundException();
+        $data->parentUuid = $this->idToUuid($data->parentId);
+        return $data;
     }
 
     /**
