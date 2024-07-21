@@ -81,31 +81,30 @@ window.imm = {
         }
         if (location.pathname.startsWith('/mindmap/') && e.target.localName === 'span') {
             e.preventDefault();
+            const element = e.target.parentElement.parentElement.localName === 'li' ? e.target.parentElement.parentElement : e.target.parentElement;
+            const id = element.getAttribute('data-uuid');
             const menu = document.createElement('ul');
             menu.setAttribute('id', 'context-menu');
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Export Subtree as JSON'));
             menu.lastElementChild.addEventListener('click', async() => {
-                const response = await fetch(location.href  + '/node/' + e.target.parentElement.parentElement.getAttribute('data-uuid') + '/json');
+                const response = await fetch(location.href  + '/node/' + id + '/json');
                 window.imm.displayExport(await response.text());
             });
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Export Subtree as XML'));
             menu.lastElementChild.addEventListener('click', async() => {
-                const response = await fetch(location.href  + '/node/' + e.target.parentElement.parentElement.getAttribute('data-uuid') + '/xml');
+                const response = await fetch(location.href  + '/node/' + id + '/xml');
                 window.imm.displayExport(await response.text());
             });
             menu.appendChild(document.createElement('li'));
             menu.lastElementChild.appendChild(document.createTextNode('Delete Subtree'));
             menu.lastElementChild.addEventListener('click', () => {
-                if (e.target.parentElement.parentElement === document.body) {
-                    return;
-                }
                 if (! window.confirm('Do you really want to delete this sub tree?')) {
                     return;
                 }
-                e.target.parentElement.parentElement.removeChild(e.target.parentElement);
-                fetch(location.href  + '/node/' + e.target.parentElement.getAttribute('data-uuid'), {
+                element.parentElement.removeChild(element);
+                fetch(location.href  + '/node/' + id, {
                     method: 'DELETE',
                 });
             });
