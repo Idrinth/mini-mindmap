@@ -200,7 +200,7 @@ window.imm = {
                             }
                         }
                         if (node.deleted === 1) {
-                            el.parentNode.removeChild(el);
+                            el.parentElement.parentElement.removeChild(el.parentElement);
                         } else {
                             el.firstElementChild.childNodes[0].setAttribute('class', node.description ? '' : 'hidden');
                             el.firstElementChild.childNodes[1].innerText = node.text;
