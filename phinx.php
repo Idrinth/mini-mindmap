@@ -16,7 +16,7 @@ return [
         'default_environment' => 'production',
         'production' => [
             'connection' => new PDO($_ENV['DATABASE_DSN'], $_ENV['DATABASE_USERNAME'],$_ENV['DATABASE_PASSWORD']),
-            'name' => 'imm',
+            'name' => 'mindmap',
             'charset' => 'utf8mb4',
         ],
     ],
