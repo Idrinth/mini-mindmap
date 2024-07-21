@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class InitializeDatabase extends AbstractMigration
+final class ChangeDeleteToSoftDelete extends AbstractMigration
 {
     public function change(): void
     {
