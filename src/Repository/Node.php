@@ -53,7 +53,7 @@ class Node
     }
     public function get(int $id): \De\Idrinth\MiniMindmap\Entity\Node
     {
-        $node = $this->database->prepare('SELECT mindmap_id as mindmapId,id,uuid,parent_id AS parentId,`text`,description FROM node WHERE id=:id');
+        $node = $this->database->prepare('SELECT mindmap_id as mindmapId,id,uuid,parent_id AS parentId,`text`,description,deleted FROM node WHERE id=:id');
         $node->execute([
             ':id' => $id,
         ]);
