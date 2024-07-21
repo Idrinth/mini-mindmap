@@ -2,6 +2,7 @@
 
 namespace De\Idrinth\MiniMindmap\Controller;
 
+use De\Idrinth\MiniMindmap\NotFoundException;
 use De\Idrinth\MiniMindmap\Repository\Node;
 use De\Idrinth\MiniMindmap\Result;
 use De\Idrinth\MiniMindmap\Result\Html;
@@ -78,7 +79,11 @@ class Mindmap
         $mindmapId = $this->mindmap->uuidToId($id);
         $parentId = $this->node->uuidToId($mindmapId, $parent);
         $result = new Json();
-        $result->setContent($this->node->get($parentId));
+        $mindmap = $this->node->get($parentId);
+        if ($mindmap->deleted === 1) {
+            throw new NotFoundException();
+        }
+        $result->setContent($mindmap);
         return $result;
     }
     public function patch(string $id, string $node): Result
@@ -96,9 +101,13 @@ class Mindmap
         Assert::uuid($id);
         Assert::uuid($node);
         $mindmapId = $this->mindmap->uuidToId($id);
+        $mindmap = $this->mindmap->get($mindmapId);
         $nodeId = $this->node->uuidToId($mindmapId, $node);
         $result = new Result\NoContent();
         $this->node->delete($nodeId);
+        if ($mindmap->rootElementId === $nodeId) {
+            $this->mindmap->delete($mindmapId);
+        }
         return $result;
     }
     public function children(string $id, string $parent): Result

@@ -14,6 +14,7 @@ class Node implements JsonSerializable
     public ?string $image = null;
     public int $mindmapId;
     public ?string $parentUuid = null;
+    public int $deleted;
 
     public function jsonSerialize(): mixed
     {

@@ -194,14 +194,22 @@ window.imm = {
                         if (el.parentElement.parentElement === document.body) {
                             document.getElementsByTagName('h1')[0].innerText = node.text;
                             document.getElementsByTagName('title')[0].innerText = node.text + ' | Idrinth Mini-Mindmap';
+                            if (node.deleted === 1) {
+                                document.location.reload();
+                                return;
+                            }
                         }
-                        el.firstElementChild.childNodes[0].setAttribute('class', node.description ? '' : 'hidden');
-                        el.firstElementChild.childNodes[1].innerText = node.text;
-                        el.firstElementChild.childNodes[2].innerText = node.description ?? '';
-                        el.firstElementChild.childNodes[3].setAttribute('src', node.image ? `/images/${window.location.pathname.split('/')[1]}/${node.uuid}.${node.image}` : '');
-                    } else {
+                        if (node.deleted === 1) {
+                            el.parentNode.removeChild(el);
+                        } else {
+                            el.firstElementChild.childNodes[0].setAttribute('class', node.description ? '' : 'hidden');
+                            el.firstElementChild.childNodes[1].innerText = node.text;
+                            el.firstElementChild.childNodes[2].innerText = node.description ?? '';
+                            el.firstElementChild.childNodes[3].setAttribute('src', node.image ? `/images/${window.location.pathname.split('/')[1]}/${node.uuid}.${node.image}` : '');
+                        }
+                    } else if (node.deleted === 0) {
                         const parent = document.getElementById('node-'+node.parentUuid).lastElementChild;
-                        parent.insertBefore(window.imm.createContentLi(node), parent.lastElementChild);
+                        parent?.insertBefore(window.imm.createContentLi(node), parent.lastElementChild);
                     }
                 }
             }

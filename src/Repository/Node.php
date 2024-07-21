@@ -67,7 +67,7 @@ class Node
     public function getChildren(int $id): array
     {
         $result = [];
-        foreach ($this->database->query("SELECT id FROM node WHERE parent_id=$id", PDO::FETCH_OBJ)->fetchAll(PDO::FETCH_OBJ) as $node) {
+        foreach ($this->database->query("SELECT id FROM node WHERE deleted=0 AND parent_id=$id", PDO::FETCH_OBJ)->fetchAll(PDO::FETCH_OBJ) as $node) {
             $result[] = $this->get($node->id);
         }
         return $result;
@@ -107,7 +107,11 @@ class Node
         foreach ($this->getChildren($id) as $child) {
             $this->delete($child->id);
         }
-        $this->database->exec("DELETE FROM node WHERE id=$id");
+        $deletion = $this->database->prepare("UPDATE node SET deleted=1,updated_at=:now WHERE id=:id");
+        $deletion->execute([
+            'id' => $id,
+            'now' => date('Y-m-d H:i:s'),
+        ]);
     }
     public function create(string $text, string $description, int $mindmapId, ?int $parentId = null): \De\Idrinth\MiniMindmap\Entity\Node
     {

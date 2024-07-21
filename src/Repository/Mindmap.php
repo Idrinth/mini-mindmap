@@ -55,4 +55,13 @@ class Mindmap
             ':title' => $title,
         ]);
     }
+
+    public function delete(int $id): void
+    {
+        $mindmap = $this->database->prepare('UPDATE mindmap SET updated_at=:now, deleted=1 WHERE id=:id');
+        $mindmap->execute([
+            ':id' => $id,
+            ':now' => date('Y-m-d H:i:s'),
+        ]);
+    }
 }
