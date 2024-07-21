@@ -24,6 +24,7 @@ class Node implements JsonSerializable
             "text" => $this->text,
             "description" => $this->description,
             "image" => $this->image,
+            "deleted" => $this->deleted,
         ];
     }
 }
