@@ -270,8 +270,10 @@ window.imm = {
             const list = await data.json();
             if (Array.isArray(list)) {
                 for (const node of list) {
-                    parent.lastElementChild.insertBefore(this.createContentLi(node), parent.lastElementChild.lastElementChild);
-                    window.setTimeout(() => window.imm.load(node.uuid), 0);
+                    if (node.deleted === 0) {
+                        parent.lastElementChild.insertBefore(this.createContentLi(node), parent.lastElementChild.lastElementChild);
+                        window.setTimeout(() => window.imm.load(node.uuid), 0);
+                    }
                 }
             }
         }
